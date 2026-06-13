@@ -1,0 +1,590 @@
+[
+  {
+    "id": "log_k_001",
+    "task_id": "task_k_001",
+    "done": true,
+    "quality": 5,
+    "notes": "上午专注，真题做顺了"
+  },
+  {
+    "id": "log_k_002",
+    "task_id": "task_k_002",
+    "done": true,
+    "quality": 4,
+    "notes": "背诵效率不错"
+  },
+  {
+    "id": "log_k_003",
+    "task_id": "task_k_003",
+    "done": true,
+    "quality": 4,
+    "notes": "长难句进入状态快"
+  },
+  {
+    "id": "log_k_004",
+    "task_id": "task_k_004",
+    "done": true,
+    "quality": 4,
+    "notes": "错题复盘很扎实"
+  },
+  {
+    "id": "log_k_005",
+    "task_id": "task_k_005",
+    "done": true,
+    "quality": 5,
+    "notes": "专业课理解很深入"
+  },
+  {
+    "id": "log_k_006",
+    "task_id": "task_k_006",
+    "done": false,
+    "quality": 2,
+    "notes": "晚上太累没写"
+  },
+  {
+    "id": "log_k_007",
+    "task_id": "task_k_007",
+    "done": true,
+    "quality": 4,
+    "notes": "计算手感回来了"
+  },
+  {
+    "id": "log_k_008",
+    "task_id": "task_k_008",
+    "done": true,
+    "quality": 3,
+    "notes": "碎片时间完成"
+  },
+  {
+    "id": "log_k_009",
+    "task_id": "task_k_009",
+    "done": false,
+    "quality": 2,
+    "notes": "午后犯困拖掉了"
+  },
+  {
+    "id": "log_k_010",
+    "task_id": "task_k_010",
+    "done": true,
+    "quality": 4,
+    "notes": "框架图梳理清晰"
+  },
+  {
+    "id": "log_k_011",
+    "task_id": "task_k_011",
+    "done": true,
+    "quality": 5,
+    "notes": "限时状态不错"
+  },
+  {
+    "id": "log_k_012",
+    "task_id": "task_k_012",
+    "done": true,
+    "quality": 4,
+    "notes": "复述比预期顺"
+  },
+  {
+    "id": "log_k_013",
+    "task_id": "task_k_013",
+    "done": true,
+    "quality": 3,
+    "notes": "周末早起完成"
+  },
+  {
+    "id": "log_k_014",
+    "task_id": "task_k_014",
+    "done": false,
+    "quality": 2,
+    "notes": "回家后没坚持"
+  },
+  {
+    "id": "log_k_015",
+    "task_id": "task_k_015",
+    "done": true,
+    "quality": 5,
+    "notes": "真题命中考点多"
+  },
+  {
+    "id": "log_k_016",
+    "task_id": "task_k_016",
+    "done": true,
+    "quality": 3,
+    "notes": "模板背得比较顺"
+  },
+  {
+    "id": "log_k_017",
+    "task_id": "task_k_017",
+    "done": true,
+    "quality": 4,
+    "notes": "线代题感稳定"
+  },
+  {
+    "id": "log_k_018",
+    "task_id": "task_k_018",
+    "done": true,
+    "quality": 4,
+    "notes": "错因总结有效"
+  },
+  {
+    "id": "log_k_019",
+    "task_id": "task_k_019",
+    "done": true,
+    "quality": 5,
+    "notes": "阅读专注度高"
+  },
+  {
+    "id": "log_k_020",
+    "task_id": "task_k_020",
+    "done": true,
+    "quality": 4,
+    "notes": "简答题整理完整"
+  },
+  {
+    "id": "log_k_021",
+    "task_id": "task_k_021",
+    "done": false,
+    "quality": 2,
+    "notes": "高难题有畏难"
+  },
+  {
+    "id": "log_k_022",
+    "task_id": "task_k_022",
+    "done": true,
+    "quality": 3,
+    "notes": "早读状态尚可"
+  },
+  {
+    "id": "log_k_023",
+    "task_id": "task_k_023",
+    "done": false,
+    "quality": 1,
+    "notes": "前一晚熬夜，没开始"
+  },
+  {
+    "id": "log_k_024",
+    "task_id": "task_k_024",
+    "done": false,
+    "quality": 1,
+    "notes": "加班后直接休息了"
+  },
+  {
+    "id": "log_k_025",
+    "task_id": "task_k_025",
+    "done": true,
+    "quality": 4,
+    "notes": "综合卷发挥稳定"
+  },
+  {
+    "id": "log_k_026",
+    "task_id": "task_k_026",
+    "done": false,
+    "quality": 2,
+    "notes": "复盘拖延了"
+  },
+  {
+    "id": "log_k_027",
+    "task_id": "task_k_027",
+    "done": true,
+    "quality": 4,
+    "notes": "选择题完成度高"
+  },
+  {
+    "id": "log_k_028",
+    "task_id": "task_k_028",
+    "done": false,
+    "quality": 2,
+    "notes": "晚上注意力分散"
+  },
+  {
+    "id": "log_f_001",
+    "task_id": "task_f_001",
+    "done": true,
+    "quality": 5,
+    "notes": "力量训练完成度高"
+  },
+  {
+    "id": "log_f_002",
+    "task_id": "task_f_002",
+    "done": true,
+    "quality": 4,
+    "notes": "热量控制住了"
+  },
+  {
+    "id": "log_f_003",
+    "task_id": "task_f_003",
+    "done": true,
+    "quality": 4,
+    "notes": "跑步节奏稳定"
+  },
+  {
+    "id": "log_f_004",
+    "task_id": "task_f_004",
+    "done": true,
+    "quality": 4,
+    "notes": "饮料控制得住"
+  },
+  {
+    "id": "log_f_005",
+    "task_id": "task_f_005",
+    "done": true,
+    "quality": 5,
+    "notes": "下肢训练很扎实"
+  },
+  {
+    "id": "log_f_006",
+    "task_id": "task_f_006",
+    "done": true,
+    "quality": 4,
+    "notes": "午餐准备很顺手"
+  },
+  {
+    "id": "log_f_007",
+    "task_id": "task_f_007",
+    "done": false,
+    "quality": 2,
+    "notes": "开会拖晚了"
+  },
+  {
+    "id": "log_f_008",
+    "task_id": "task_f_008",
+    "done": true,
+    "quality": 3,
+    "notes": "睡前还是拉伸了"
+  },
+  {
+    "id": "log_f_009",
+    "task_id": "task_f_009",
+    "done": true,
+    "quality": 4,
+    "notes": "有氧完成轻松"
+  },
+  {
+    "id": "log_f_010",
+    "task_id": "task_f_010",
+    "done": true,
+    "quality": 4,
+    "notes": "蛋白质基本达标"
+  },
+  {
+    "id": "log_f_011",
+    "task_id": "task_f_011",
+    "done": true,
+    "quality": 5,
+    "notes": "循环训练状态很好"
+  },
+  {
+    "id": "log_f_012",
+    "task_id": "task_f_012",
+    "done": true,
+    "quality": 4,
+    "notes": "散步后恢复不错"
+  },
+  {
+    "id": "log_f_013",
+    "task_id": "task_f_013",
+    "done": false,
+    "quality": 2,
+    "notes": "周末起晚了"
+  },
+  {
+    "id": "log_f_014",
+    "task_id": "task_f_014",
+    "done": true,
+    "quality": 4,
+    "notes": "聚餐前控制住了"
+  },
+  {
+    "id": "log_f_015",
+    "task_id": "task_f_015",
+    "done": true,
+    "quality": 5,
+    "notes": "推训练有进步"
+  },
+  {
+    "id": "log_f_016",
+    "task_id": "task_f_016",
+    "done": true,
+    "quality": 4,
+    "notes": "数据记录及时"
+  },
+  {
+    "id": "log_f_017",
+    "task_id": "task_f_017",
+    "done": true,
+    "quality": 4,
+    "notes": "单车出了汗"
+  },
+  {
+    "id": "log_f_018",
+    "task_id": "task_f_018",
+    "done": true,
+    "quality": 4,
+    "notes": "午餐选择更克制"
+  },
+  {
+    "id": "log_f_019",
+    "task_id": "task_f_019",
+    "done": true,
+    "quality": 5,
+    "notes": "拉训练强度合适"
+  },
+  {
+    "id": "log_f_020",
+    "task_id": "task_f_020",
+    "done": true,
+    "quality": 4,
+    "notes": "没吃夜宵"
+  },
+  {
+    "id": "log_f_021",
+    "task_id": "task_f_021",
+    "done": false,
+    "quality": 2,
+    "notes": "加班后不想动"
+  },
+  {
+    "id": "log_f_022",
+    "task_id": "task_f_022",
+    "done": true,
+    "quality": 4,
+    "notes": "蔬菜吃够了"
+  },
+  {
+    "id": "log_f_023",
+    "task_id": "task_f_023",
+    "done": true,
+    "quality": 4,
+    "notes": "快走时长够"
+  },
+  {
+    "id": "log_f_024",
+    "task_id": "task_f_024",
+    "done": true,
+    "quality": 4,
+    "notes": "热量控制稳定"
+  },
+  {
+    "id": "log_f_025",
+    "task_id": "task_f_025",
+    "done": true,
+    "quality": 5,
+    "notes": "臀腿训练完成"
+  },
+  {
+    "id": "log_f_026",
+    "task_id": "task_f_026",
+    "done": false,
+    "quality": 2,
+    "notes": "训练后忘记补充"
+  },
+  {
+    "id": "log_f_027",
+    "task_id": "task_f_027",
+    "done": true,
+    "quality": 5,
+    "notes": "跑步状态不错"
+  },
+  {
+    "id": "log_f_028",
+    "task_id": "task_f_028",
+    "done": true,
+    "quality": 4,
+    "notes": "复盘有收获"
+  },
+  {
+    "id": "log_e_001",
+    "task_id": "task_e_001",
+    "done": true,
+    "quality": 4,
+    "notes": "播客听懂不少"
+  },
+  {
+    "id": "log_e_002",
+    "task_id": "task_e_002",
+    "done": false,
+    "quality": 2,
+    "notes": "回家太晚没跟读"
+  },
+  {
+    "id": "log_e_003",
+    "task_id": "task_e_003",
+    "done": true,
+    "quality": 4,
+    "notes": "精听比较投入"
+  },
+  {
+    "id": "log_e_004",
+    "task_id": "task_e_004",
+    "done": true,
+    "quality": 3,
+    "notes": "表达整理顺手"
+  },
+  {
+    "id": "log_e_005",
+    "task_id": "task_e_005",
+    "done": false,
+    "quality": 2,
+    "notes": "开口意愿不高"
+  },
+  {
+    "id": "log_e_006",
+    "task_id": "task_e_006",
+    "done": true,
+    "quality": 3,
+    "notes": "背句型完成了"
+  },
+  {
+    "id": "log_e_007",
+    "task_id": "task_e_007",
+    "done": true,
+    "quality": 4,
+    "notes": "跟读节奏不错"
+  },
+  {
+    "id": "log_e_008",
+    "task_id": "task_e_008",
+    "done": false,
+    "quality": 2,
+    "notes": "周报没写完"
+  },
+  {
+    "id": "log_e_009",
+    "task_id": "task_e_009",
+    "done": true,
+    "quality": 5,
+    "notes": "听力专注度高"
+  },
+  {
+    "id": "log_e_010",
+    "task_id": "task_e_010",
+    "done": true,
+    "quality": 4,
+    "notes": "复述比昨天顺"
+  },
+  {
+    "id": "log_e_011",
+    "task_id": "task_e_011",
+    "done": false,
+    "quality": 1,
+    "notes": "下班太晚没做"
+  },
+  {
+    "id": "log_e_012",
+    "task_id": "task_e_012",
+    "done": false,
+    "quality": 1,
+    "notes": "整晚都在加班"
+  },
+  {
+    "id": "log_e_013",
+    "task_id": "task_e_013",
+    "done": true,
+    "quality": 3,
+    "notes": "跟读完成但一般"
+  },
+  {
+    "id": "log_e_014",
+    "task_id": "task_e_014",
+    "done": false,
+    "quality": 2,
+    "notes": "TED听到一半停了"
+  },
+  {
+    "id": "log_e_015",
+    "task_id": "task_e_015",
+    "done": true,
+    "quality": 5,
+    "notes": "角色扮演进入状态"
+  },
+  {
+    "id": "log_e_016",
+    "task_id": "task_e_016",
+    "done": true,
+    "quality": 4,
+    "notes": "发音问题记下了"
+  },
+  {
+    "id": "log_e_017",
+    "task_id": "task_e_017",
+    "done": true,
+    "quality": 4,
+    "notes": "听力难度合适"
+  },
+  {
+    "id": "log_e_018",
+    "task_id": "task_e_018",
+    "done": false,
+    "quality": 2,
+    "notes": "提问句没动笔"
+  },
+  {
+    "id": "log_e_019",
+    "task_id": "task_e_019",
+    "done": true,
+    "quality": 3,
+    "notes": "总结模板较熟了"
+  },
+  {
+    "id": "log_e_020",
+    "task_id": "task_e_020",
+    "done": false,
+    "quality": 2,
+    "notes": "生词复盘拖延"
+  },
+  {
+    "id": "log_e_021",
+    "task_id": "task_e_021",
+    "done": false,
+    "quality": 1,
+    "notes": "晨会模拟没开始"
+  },
+  {
+    "id": "log_e_022",
+    "task_id": "task_e_022",
+    "done": false,
+    "quality": 1,
+    "notes": "新闻也没听"
+  },
+  {
+    "id": "log_e_023",
+    "task_id": "task_e_023",
+    "done": true,
+    "quality": 4,
+    "notes": "录音材料很贴近工作"
+  },
+  {
+    "id": "log_e_024",
+    "task_id": "task_e_024",
+    "done": true,
+    "quality": 4,
+    "notes": "句型记住大半"
+  },
+  {
+    "id": "log_e_025",
+    "task_id": "task_e_025",
+    "done": true,
+    "quality": 4,
+    "notes": "跟读完成"
+  },
+  {
+    "id": "log_e_026",
+    "task_id": "task_e_026",
+    "done": false,
+    "quality": 2,
+    "notes": "纪要写作又拖了"
+  },
+  {
+    "id": "log_e_027",
+    "task_id": "task_e_027",
+    "done": true,
+    "quality": 5,
+    "notes": "发言比上周顺"
+  },
+  {
+    "id": "log_e_028",
+    "task_id": "task_e_028",
+    "done": true,
+    "quality": 4,
+    "notes": "卡点复盘清楚"
+  }
+]
