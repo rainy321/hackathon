@@ -1,0 +1,26 @@
+[
+  {
+    "id": "goal_001",
+    "user_id": "user_001",
+    "title": "3个月考研上岸计划",
+    "category": "学习",
+    "time_horizon": "3个月",
+    "status": "active"
+  },
+  {
+    "id": "goal_002",
+    "user_id": "user_002",
+    "title": "3个月减重10kg计划",
+    "category": "健康",
+    "time_horizon": "3个月",
+    "status": "active"
+  },
+  {
+    "id": "goal_003",
+    "user_id": "user_003",
+    "title": "6个月能开英文会议计划",
+    "category": "学习",
+    "time_horizon": "6个月",
+    "status": "active"
+  }
+]

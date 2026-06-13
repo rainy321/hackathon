@@ -1,0 +1,674 @@
+[
+  {
+    "id": "task_k_001",
+    "goal_id": "goal_001",
+    "date": "2025-06-01",
+    "content": "完成数学真题1套并订正错题",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_002",
+    "goal_id": "goal_001",
+    "date": "2025-06-01",
+    "content": "背诵政治100个核心考点",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_003",
+    "goal_id": "goal_001",
+    "date": "2025-06-02",
+    "content": "整理英语阅读长难句20句",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_004",
+    "goal_id": "goal_001",
+    "date": "2025-06-02",
+    "content": "复盘昨天数学错题并写易错清单",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_005",
+    "goal_id": "goal_001",
+    "date": "2025-06-03",
+    "content": "完成专业课章节1-2精读笔记",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_006",
+    "goal_id": "goal_001",
+    "date": "2025-06-03",
+    "content": "晚间英语作文仿写1篇",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_007",
+    "goal_id": "goal_001",
+    "date": "2025-06-04",
+    "content": "完成数学强化题30道",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_008",
+    "goal_id": "goal_001",
+    "date": "2025-06-04",
+    "content": "背诵政治选择题易错点",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_009",
+    "goal_id": "goal_001",
+    "date": "2025-06-05",
+    "content": "完成英语阅读2篇并精翻",
+    "difficulty": "高",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_010",
+    "goal_id": "goal_001",
+    "date": "2025-06-05",
+    "content": "整理专业课框架图1张",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_011",
+    "goal_id": "goal_001",
+    "date": "2025-06-06",
+    "content": "完成数学真题1套并限时模拟",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_012",
+    "goal_id": "goal_001",
+    "date": "2025-06-06",
+    "content": "复述专业课重点概念10个",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_013",
+    "goal_id": "goal_001",
+    "date": "2025-06-07",
+    "content": "整理本周英语生词并复习",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_014",
+    "goal_id": "goal_001",
+    "date": "2025-06-07",
+    "content": "完成政治选择题50题",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_015",
+    "goal_id": "goal_001",
+    "date": "2025-06-08",
+    "content": "完成专业课真题1套并标记考点",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_016",
+    "goal_id": "goal_001",
+    "date": "2025-06-08",
+    "content": "晚间背诵英语作文模板2段",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_017",
+    "goal_id": "goal_001",
+    "date": "2025-06-09",
+    "content": "完成数学线代专题训练25题",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_018",
+    "goal_id": "goal_001",
+    "date": "2025-06-09",
+    "content": "复盘政治错题并口述原因",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_019",
+    "goal_id": "goal_001",
+    "date": "2025-06-10",
+    "content": "完成英语阅读3篇并总结题型套路",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_020",
+    "goal_id": "goal_001",
+    "date": "2025-06-10",
+    "content": "整理专业课高频简答题10题",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_021",
+    "goal_id": "goal_001",
+    "date": "2025-06-11",
+    "content": "完成数学概率专题训练20题",
+    "difficulty": "高",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_022",
+    "goal_id": "goal_001",
+    "date": "2025-06-11",
+    "content": "早读背诵政治时政热点",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_023",
+    "goal_id": "goal_001",
+    "date": "2025-06-12",
+    "content": "完成专业课章节3-4精读笔记",
+    "difficulty": "高",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_024",
+    "goal_id": "goal_001",
+    "date": "2025-06-12",
+    "content": "完成英语翻译练习2段",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_025",
+    "goal_id": "goal_001",
+    "date": "2025-06-13",
+    "content": "限时完成数学综合卷1套",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_026",
+    "goal_id": "goal_001",
+    "date": "2025-06-13",
+    "content": "整理本周复盘清单并调整计划",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_k_027",
+    "goal_id": "goal_001",
+    "date": "2025-06-14",
+    "content": "完成政治模拟卷选择题部分",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_k_028",
+    "goal_id": "goal_001",
+    "date": "2025-06-14",
+    "content": "晚间口述专业课知识框架20分钟",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_f_001",
+    "goal_id": "goal_002",
+    "date": "2025-06-01",
+    "content": "进行45分钟力量训练（上半身）",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_002",
+    "goal_id": "goal_002",
+    "date": "2025-06-01",
+    "content": "晚餐控制在七分饱并记录热量",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_003",
+    "goal_id": "goal_002",
+    "date": "2025-06-02",
+    "content": "快走或慢跑40分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_004",
+    "goal_id": "goal_002",
+    "date": "2025-06-02",
+    "content": "喝水2L并避免含糖饮料",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_005",
+    "goal_id": "goal_002",
+    "date": "2025-06-03",
+    "content": "进行45分钟力量训练（下半身）",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_006",
+    "goal_id": "goal_002",
+    "date": "2025-06-03",
+    "content": "准备第二天低脂午餐",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_007",
+    "goal_id": "goal_002",
+    "date": "2025-06-04",
+    "content": "完成20分钟核心训练",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_f_008",
+    "goal_id": "goal_002",
+    "date": "2025-06-04",
+    "content": "晚间拉伸15分钟",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_009",
+    "goal_id": "goal_002",
+    "date": "2025-06-05",
+    "content": "爬坡走或椭圆机30分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_010",
+    "goal_id": "goal_002",
+    "date": "2025-06-05",
+    "content": "全天蛋白质摄入达标",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_011",
+    "goal_id": "goal_002",
+    "date": "2025-06-06",
+    "content": "进行50分钟全身循环训练",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_012",
+    "goal_id": "goal_002",
+    "date": "2025-06-06",
+    "content": "晚饭后散步20分钟",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_013",
+    "goal_id": "goal_002",
+    "date": "2025-06-07",
+    "content": "休息日做30分钟舒缓瑜伽",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_f_014",
+    "goal_id": "goal_002",
+    "date": "2025-06-07",
+    "content": "控制周末加餐不过量",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_015",
+    "goal_id": "goal_002",
+    "date": "2025-06-08",
+    "content": "进行45分钟力量训练（推）",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_016",
+    "goal_id": "goal_002",
+    "date": "2025-06-08",
+    "content": "记录晨起体重和围度",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_017",
+    "goal_id": "goal_002",
+    "date": "2025-06-09",
+    "content": "跳绳或动感单车30分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_018",
+    "goal_id": "goal_002",
+    "date": "2025-06-09",
+    "content": "午餐减少油炸食物",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_019",
+    "goal_id": "goal_002",
+    "date": "2025-06-10",
+    "content": "进行45分钟力量训练（拉）",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_020",
+    "goal_id": "goal_002",
+    "date": "2025-06-10",
+    "content": "睡前不吃夜宵",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_021",
+    "goal_id": "goal_002",
+    "date": "2025-06-11",
+    "content": "完成20分钟HIIT训练",
+    "difficulty": "高",
+    "status": "pending"
+  },
+  {
+    "id": "task_f_022",
+    "goal_id": "goal_002",
+    "date": "2025-06-11",
+    "content": "晚间补充蔬菜两份",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_023",
+    "goal_id": "goal_002",
+    "date": "2025-06-12",
+    "content": "快走60分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_024",
+    "goal_id": "goal_002",
+    "date": "2025-06-12",
+    "content": "当天总热量控制在目标范围",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_025",
+    "goal_id": "goal_002",
+    "date": "2025-06-13",
+    "content": "进行40分钟臀腿训练",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_026",
+    "goal_id": "goal_002",
+    "date": "2025-06-13",
+    "content": "训练后补充蛋白质",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_f_027",
+    "goal_id": "goal_002",
+    "date": "2025-06-14",
+    "content": "户外慢跑5公里或等量有氧",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_f_028",
+    "goal_id": "goal_002",
+    "date": "2025-06-14",
+    "content": "复盘本周饮食和运动数据",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_001",
+    "goal_id": "goal_003",
+    "date": "2025-06-01",
+    "content": "听英语会议播客20分钟并记5个表达",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_002",
+    "goal_id": "goal_003",
+    "date": "2025-06-01",
+    "content": "跟读自我介绍10分钟",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_003",
+    "goal_id": "goal_003",
+    "date": "2025-06-02",
+    "content": "精听英文会议片段25分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_004",
+    "goal_id": "goal_003",
+    "date": "2025-06-02",
+    "content": "整理10个会议常用表达",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_005",
+    "goal_id": "goal_003",
+    "date": "2025-06-03",
+    "content": "跟读会议开场白15分钟",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_006",
+    "goal_id": "goal_003",
+    "date": "2025-06-03",
+    "content": "背诵8个汇报进度句型",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_007",
+    "goal_id": "goal_003",
+    "date": "2025-06-04",
+    "content": "进行1次20分钟口语影子跟读",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_008",
+    "goal_id": "goal_003",
+    "date": "2025-06-04",
+    "content": "写一段英文周报100词",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_009",
+    "goal_id": "goal_003",
+    "date": "2025-06-05",
+    "content": "精听英文电话会议30分钟",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_010",
+    "goal_id": "goal_003",
+    "date": "2025-06-05",
+    "content": "口头复述会议要点10分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_011",
+    "goal_id": "goal_003",
+    "date": "2025-06-06",
+    "content": "完成商务英语词汇复习20个",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_012",
+    "goal_id": "goal_003",
+    "date": "2025-06-06",
+    "content": "模拟会议发言15分钟",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_013",
+    "goal_id": "goal_003",
+    "date": "2025-06-07",
+    "content": "跟读会议转场表达15分钟",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_014",
+    "goal_id": "goal_003",
+    "date": "2025-06-07",
+    "content": "听TED职场主题20分钟",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_015",
+    "goal_id": "goal_003",
+    "date": "2025-06-08",
+    "content": "进行英文会议角色扮演20分钟",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_016",
+    "goal_id": "goal_003",
+    "date": "2025-06-08",
+    "content": "整理本周易错发音8个",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_017",
+    "goal_id": "goal_003",
+    "date": "2025-06-09",
+    "content": "精听产品演示视频25分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_018",
+    "goal_id": "goal_003",
+    "date": "2025-06-09",
+    "content": "写5句英文提问句",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_019",
+    "goal_id": "goal_003",
+    "date": "2025-06-10",
+    "content": "跟读会议总结模板15分钟",
+    "difficulty": "低",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_020",
+    "goal_id": "goal_003",
+    "date": "2025-06-10",
+    "content": "复盘本周听力生词12个",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_021",
+    "goal_id": "goal_003",
+    "date": "2025-06-11",
+    "content": "模拟英文晨会输出15分钟",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_022",
+    "goal_id": "goal_003",
+    "date": "2025-06-11",
+    "content": "听英语新闻20分钟",
+    "difficulty": "低",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_023",
+    "goal_id": "goal_003",
+    "date": "2025-06-12",
+    "content": "精听客户沟通录音25分钟",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_024",
+    "goal_id": "goal_003",
+    "date": "2025-06-12",
+    "content": "背诵10个澄清需求句型",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_025",
+    "goal_id": "goal_003",
+    "date": "2025-06-13",
+    "content": "跟读会议讨论表达15分钟",
+    "difficulty": "中",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_026",
+    "goal_id": "goal_003",
+    "date": "2025-06-13",
+    "content": "写一段英文会议纪要120词",
+    "difficulty": "中",
+    "status": "pending"
+  },
+  {
+    "id": "task_e_027",
+    "goal_id": "goal_003",
+    "date": "2025-06-14",
+    "content": "模拟英文周会发言20分钟",
+    "difficulty": "高",
+    "status": "completed"
+  },
+  {
+    "id": "task_e_028",
+    "goal_id": "goal_003",
+    "date": "2025-06-14",
+    "content": "复盘6个高频口语卡点",
+    "difficulty": "低",
+    "status": "completed"
+  }
+]

@@ -1,0 +1,15 @@
+# secrets
+.env
+backend/.env
+
+# sqlite db
+*.db
+backend/*.db
+
+# python
+__pycache__/
+*.pyc
+
+# node
+node_modules/
+.next/
