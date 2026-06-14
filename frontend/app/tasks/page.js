@@ -34,7 +34,7 @@ function TaskStatusIcon({ status }) {
 export default function TasksPage() {
   const { uid, tasks, setTasks, simDate, dayN, fastForward, refreshDash, loadAll, tone } = useGrowth();
 
-  const [goal, setGoal] = useState("3个月学会高尔夫");
+  const [goal, setGoal] = useState("");
   const [horizon, setHorizon] = useState("3个月");
   const [category, setCategory] = useState("健康");
   const [decomp, setDecomp] = useState(null);
@@ -300,7 +300,7 @@ export default function TasksPage() {
             <div className="space-y-3">
               <label className="block">
                 <span className="mb-1.5 block text-xs font-semibold text-text2">目标</span>
-                <input value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="例如: 3个月学会高尔夫" className="w-full rounded-md border border-line bg-card px-3 py-2.5 text-sm outline-none transition focus:border-accent/50" />
+                <input value={goal} onChange={(e) => setGoal(e.target.value)} placeholder="输入你的目标,例如:3个月考研上岸" className="w-full rounded-md border border-line bg-card px-3 py-2.5 text-sm outline-none transition focus:border-accent/50" />
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <label className="block">
