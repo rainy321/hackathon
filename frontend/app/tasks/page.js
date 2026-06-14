@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import {
   ArrowRight,
-  Brain,
   CalendarClock,
   CheckCircle2,
   Circle,
@@ -35,7 +34,7 @@ export default function TasksPage() {
   const { uid, tasks, setTasks, simDate, dayN, fastForward, refreshDash, loadAll, tone } = useGrowth();
 
   const [goal, setGoal] = useState("");
-  const [horizon, setHorizon] = useState("3个月");
+  const [horizon, setHorizon] = useState("");
   const [category, setCategory] = useState("");
   const [decomp, setDecomp] = useState(null);
   const [createdGoalId, setCreatedGoalId] = useState("");
@@ -369,20 +368,11 @@ export default function TasksPage() {
           </Card>
 
           <Card tone="soft">
-            <SectionTitle icon={Brain} title="演示节奏" desc="连续快进并打卡几天,复盘页会更容易看出偏差。" />
-            <div className="space-y-3 text-sm leading-6 text-text2">
-              <div className="flex gap-3">
-                <Tag tone="accent">1</Tag>
-                创建目标并生成今日任务
-              </div>
-              <div className="flex gap-3">
-                <Tag tone="warn">2</Tag>
-                故意记录几次加班或太累
-              </div>
-              <div className="flex gap-3">
-                <Tag tone="info">3</Tag>
-                去 AI 复盘页生成调整建议
-              </div>
+            <SectionTitle icon={Sparkles} title="小贴士" />
+            <div className="space-y-2 text-xs leading-6 text-text2">
+              <div>· 每条任务可一键记录状态,也能编辑、删除或自己添加。</div>
+              <div>· 不满意当天的安排?点「换一批」重新生成。</div>
+              <div>· 打卡信息会进入「AI 复盘」,帮你发现规律。</div>
             </div>
           </Card>
         </div>
