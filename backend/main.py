@@ -115,7 +115,9 @@ def api_create_goal(body: schemas.GoalCreate):
     gid = f"goal_{uuid4().hex[:8]}"
     user = crud.get_user(body.user_id)
     baseline = (user or {}).get("baseline", "")
-    decomp = ai_adapter.goal_decomposer(body.title, body.time_horizon or "", baseline)
+    # 把类别带进 AI(让不同类别拆解有差异);存库的标题保持干净
+    ai_goal = f"{body.title}（类别:{body.category}）" if body.category else body.title
+    decomp = ai_adapter.goal_decomposer(ai_goal, body.time_horizon or "", baseline)
     return crud.create_goal(gid, body.user_id, body.title, body.category,
                             body.time_horizon, body.status, decomp)
 

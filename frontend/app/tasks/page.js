@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Brain,
@@ -21,7 +21,7 @@ import {
 import { useGrowth } from "../providers";
 import { api } from "@/lib/api";
 import { Bar, BotanicalAccent, Btn, Card, EmptyState, PageHeader, SectionTitle, Tag } from "../ui";
-import { FEEDBACK, PRESETS, pick } from "../shared";
+import { FEEDBACK, PRESETS, addDay, pick } from "../shared";
 
 const diffTone = { 高: "danger", 中: "warn", 低: "accent" };
 
@@ -36,7 +36,7 @@ export default function TasksPage() {
 
   const [goal, setGoal] = useState("");
   const [horizon, setHorizon] = useState("3个月");
-  const [category, setCategory] = useState("健康");
+  const [category, setCategory] = useState("");
   const [decomp, setDecomp] = useState(null);
   const [createdGoalId, setCreatedGoalId] = useState("");
   const [busy, setBusy] = useState(false);
@@ -50,8 +50,11 @@ export default function TasksPage() {
 
   const [err, setErr] = useState("");
   const [toast, setToast] = useState("");
+  const [viewDate, setViewDate] = useState(simDate);
+  useEffect(() => setViewDate(simDate), [simDate]);
+  const isToday = viewDate === simDate;
 
-  const todays = tasks.filter((t) => t.date === simDate);
+  const todays = tasks.filter((t) => t.date === viewDate);
   const doneToday = todays.filter((t) => t.status === "completed").length;
   const settledToday = todays.filter((t) => t.status === "completed" || t.status === "skipped").length;
   const todayRate = todays.length ? doneToday / todays.length : 0;
@@ -186,6 +189,13 @@ export default function TasksPage() {
               ) : null}
             />
 
+            <div className="mb-4 flex items-center gap-2 text-xs">
+              <button onClick={() => setViewDate(addDay(viewDate, -1))} className="flex h-7 w-7 items-center justify-center rounded-md border border-line text-text2 hover:text-accent">‹</button>
+              <span className="font-semibold text-ink">{viewDate}{isToday ? " · 今天" : viewDate < simDate ? " · 往期" : " · 未来"}</span>
+              <button onClick={() => setViewDate(addDay(viewDate, 1))} className="flex h-7 w-7 items-center justify-center rounded-md border border-line text-text2 hover:text-accent">›</button>
+              {!isToday && <button onClick={() => setViewDate(simDate)} className="ml-1 text-accent hover:opacity-70">回到今天</button>}
+            </div>
+
             <div className="mb-5 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-end">
               <Bar label={`完成 ${doneToday}/${todays.length || 0}`} rate={todayRate} />
               <div className="flex gap-2">
@@ -308,13 +318,12 @@ export default function TasksPage() {
                   <input value={horizon} onChange={(e) => setHorizon(e.target.value)} placeholder="3个月" className="w-full rounded-md border border-line bg-card px-3 py-2.5 text-sm outline-none transition focus:border-accent/50" />
                 </label>
                 <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold text-text2">类别</span>
-                  <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full rounded-md border border-line bg-card px-3 py-2.5 text-sm">
-                    <option>学习</option>
-                    <option>健康</option>
-                    <option>行为</option>
-                    <option>目标</option>
-                  </select>
+                  <span className="mb-1.5 block text-xs font-semibold text-text2">类别(可自定义)</span>
+                  <input list="cat-list" value={category} onChange={(e) => setCategory(e.target.value)} placeholder="如:学习 / 健康 / 搞钱 / 心态" className="w-full rounded-md border border-line bg-card px-3 py-2.5 text-sm outline-none transition focus:border-accent/50" />
+                  <datalist id="cat-list">
+                    <option>学习</option><option>健康</option><option>行为</option><option>目标</option>
+                    <option>搞钱</option><option>社交</option><option>心态</option><option>兴趣</option>
+                  </datalist>
                 </label>
               </div>
             </div>
