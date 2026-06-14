@@ -100,8 +100,13 @@ def _run(prompt_name, input_dict, mock_fn):
         {"role": "system", "content": load_prompt(prompt_name)},
         {"role": "user", "content": json.dumps(input_dict, ensure_ascii=False)},
     ]
-    text = call_llm(messages, model=cfg["model"])
-    return parse_json_text(text)
+    try:
+        text = call_llm(messages, model=cfg["model"])
+        return parse_json_text(text)
+    except Exception as e:
+        # 黑客松演示优先保证闭环不断:真实 LLM 失败时退回结构化 Mock。
+        print(f"[ai_adapter] {prompt_name} fallback to mock: {type(e).__name__}: {e}")
+        return mock_fn()
 
 
 # ---------------- 4 个 Prompt 函数 ----------------

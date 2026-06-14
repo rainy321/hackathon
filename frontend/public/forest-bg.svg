@@ -1,0 +1,47 @@
+<svg width="1800" height="1200" viewBox="0 0 1800 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="900" y1="0" x2="900" y2="1200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f6ead6"/>
+      <stop offset="0.43" stop-color="#edf1df"/>
+      <stop offset="1" stop-color="#d8e2ca"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1270 235) rotate(126.2) scale(620 430)">
+      <stop stop-color="#fff7dc" stop-opacity="0.94"/>
+      <stop offset="0.35" stop-color="#f4d7a6" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#f4d7a6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blurSoft" x="-120" y="-120" width="2040" height="1440" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="blurBack" x="-120" y="-120" width="2040" height="1440" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="38"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="1200" fill="url(#sky)"/>
+  <rect width="1800" height="1200" fill="url(#sun)"/>
+
+  <g filter="url(#blurBack)" opacity="0.55">
+    <path d="M-40 1130C180 996 287 816 334 565C370 370 445 230 546 113C619 301 641 454 620 660C596 895 482 1067 360 1230H-40V1130Z" fill="#94a978"/>
+    <path d="M255 1220C427 1016 458 760 432 475C412 263 482 116 608 20C745 206 817 420 796 704C780 924 710 1082 612 1220H255Z" fill="#71875f"/>
+    <path d="M690 1230C832 1048 900 807 875 515C854 272 918 104 1054 0C1216 220 1271 446 1228 728C1195 945 1122 1114 1034 1230H690Z" fill="#7f9368"/>
+    <path d="M1090 1240C1212 1000 1258 806 1228 548C1202 322 1306 138 1465 24C1609 246 1666 522 1628 822C1605 1000 1544 1141 1478 1240H1090Z" fill="#637a55"/>
+    <path d="M1435 1228C1577 1030 1607 800 1582 560C1560 340 1645 164 1815 48V1228H1435Z" fill="#82966a"/>
+  </g>
+
+  <g filter="url(#blurSoft)" opacity="0.42">
+    <ellipse cx="265" cy="795" rx="280" ry="160" fill="#c0c99a"/>
+    <ellipse cx="770" cy="700" rx="330" ry="180" fill="#acbb8d"/>
+    <ellipse cx="1280" cy="755" rx="370" ry="190" fill="#b6c59a"/>
+    <ellipse cx="1630" cy="665" rx="250" ry="150" fill="#d3d09f"/>
+  </g>
+
+  <g opacity="0.22">
+    <path d="M153 1040C218 1012 260 1006 328 1037C259 1062 217 1070 153 1040Z" fill="#6d8460"/>
+    <path d="M1348 962C1425 920 1487 915 1555 950C1483 990 1416 998 1348 962Z" fill="#789067"/>
+    <path d="M1020 1018C1095 986 1146 984 1200 1014C1144 1045 1087 1054 1020 1018Z" fill="#6f865f"/>
+  </g>
+
+  <path d="M0 1012C266 950 536 934 810 980C1038 1018 1282 994 1506 943C1615 918 1712 918 1800 945V1200H0V1012Z" fill="#e6dcc8" opacity="0.66"/>
+  <path d="M0 1082C320 1019 613 1048 890 1088C1191 1132 1490 1100 1800 1028V1200H0V1082Z" fill="#d8ceb9" opacity="0.64"/>
+</svg>

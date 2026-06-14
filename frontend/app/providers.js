@@ -24,12 +24,15 @@ export function GrowthProvider({ children }) {
 
   // 挂载后读登录态(SSR 安全)
   useEffect(() => {
-    try {
-      const s = localStorage.getItem("gos_me");
-      if (s) setMe(JSON.parse(s));
-      const sd = localStorage.getItem("gos_sim");
-      if (sd) setSimDate(sd);
-    } catch (e) {}
+    const timer = window.setTimeout(() => {
+      try {
+        const s = localStorage.getItem("gos_me");
+        if (s) setMe(JSON.parse(s));
+        const sd = localStorage.getItem("gos_sim");
+        if (sd) setSimDate(sd);
+      } catch (e) {}
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const loadAll = useCallback((id) => {

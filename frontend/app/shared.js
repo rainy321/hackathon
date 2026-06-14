@@ -9,7 +9,7 @@ export const TONES = ["温暖朋友", "严格教练", "幽默伙伴"];
 
 export const FEEDBACK = {
   温暖朋友: {
-    done: ["做到啦,很棒!今天又往前一步~", "完成一个就很厉害了,继续!", "稳稳的,给自己点个赞 👍"],
+    done: ["做到啦,很棒!今天又往前一步。", "完成一个就很厉害了,继续!", "稳稳的,给自己点个赞。"],
     miss: ["辛苦了,先休息,明天咱们把简单的先做。", "没关系,加班太累很正常,保住状态最重要。", "别自责,明天重新来过就好~"],
   },
   严格教练: {
@@ -23,10 +23,10 @@ export const FEEDBACK = {
 };
 
 export const PRESETS = [
-  { label: "✅顺利", done: true, quality: 5, note: "顺利完成", cls: "bg-[#4caf50]" },
+  { label: "顺利", done: true, quality: 5, note: "顺利完成", cls: "bg-[#4caf50]" },
   { label: "勉强", done: true, quality: 3, note: "勉强完成", cls: "bg-[#ffc107]" },
-  { label: "😵加班", done: false, quality: 2, note: "加班没做", cls: "bg-[#f44336]" },
-  { label: "😵太累", done: false, quality: 1, note: "太累了", cls: "bg-[#9e9e9e]" },
+  { label: "加班", done: false, quality: 2, note: "加班没做", cls: "bg-[#d65645]" },
+  { label: "太累", done: false, quality: 1, note: "太累了", cls: "bg-[#77736b]" },
 ];
 
 // —— 日期工具(全部用 UTC,避免时区把"加一天"吃掉)——
@@ -47,7 +47,7 @@ export function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; 
 // —— 陪伴小人对话 ——
 export function companionGreeting(tone, name, dayN) {
   const g = {
-    温暖朋友: `Hi ${name} 👋 第 ${dayN} 天啦,今天想从哪件小事开始?`,
+    温暖朋友: `Hi ${name},第 ${dayN} 天啦,今天想从哪件小事开始?`,
     严格教练: `${name},第 ${dayN} 天。计划列了吗?现在就开始。`,
     幽默伙伴: `哟 ${name},第 ${dayN} 天,你的任务已经等不及了。`,
   };

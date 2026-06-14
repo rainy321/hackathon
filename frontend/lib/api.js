@@ -2,11 +2,16 @@
 const BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
 
 async function request(path, { method = "GET", body } = {}) {
-  const r = await fetch(BASE + path, {
-    method,
-    headers: body !== undefined ? { "Content-Type": "application/json" } : undefined,
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-  });
+  let r;
+  try {
+    r = await fetch(BASE + path, {
+      method,
+      headers: body !== undefined ? { "Content-Type": "application/json" } : undefined,
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+    });
+  } catch (e) {
+    throw new Error(`连接后端失败,请确认 FastAPI 已启动: ${BASE}`);
+  }
   if (!r.ok) {
     let detail = String(r.status);
     try {
