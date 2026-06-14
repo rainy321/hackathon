@@ -14,7 +14,7 @@
 - **只用单 Agent + 4 个 Prompt 函数**:Goal Decomposer / Daily Planner / Behavior Analyst / System Adjuster
 - **不要引入**:LangChain / AutoGen / CrewAI / 多 Agent 框架 / 向量数据库 / 知识图谱 / MCP
 - Prompt 是纯文本(`prompts/*.txt`),**改 prompt 不动代码**
-- UI 风格:米白底 `#f8f5f0` + 白卡 + 绿系强调 `#4caf50` + 线性图标(参考 `linshi/` 里的模板图)
+- UI 风格:米白底 `#f8f5f0` + 白卡 + 绿系强调 `#4caf50` + lucide 线性图标
 
 ## 项目结构(MVP 已建成)
 - `backend/` FastAPI 服务端
