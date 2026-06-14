@@ -36,3 +36,11 @@ linshi/
 build_excel*.py
 Growth_OS_对话记录.md
 make_chatlog.py
+
+# Next.js 默认模板图/README(没用,本地保留)
+frontend/public/next.svg
+frontend/public/vercel.svg
+frontend/public/file.svg
+frontend/public/globe.svg
+frontend/public/window.svg
+frontend/README.md
