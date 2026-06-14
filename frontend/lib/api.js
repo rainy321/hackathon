@@ -1,5 +1,8 @@
-// 后端 API 客户端。默认指向本地 FastAPI(8000)。
-const BASE = process.env.NEXT_PUBLIC_API_BASE || "http://localhost:8000";
+// 后端 API 客户端。
+// - 设了 NEXT_PUBLIC_API_BASE 就用它(Vercel 指向 Render 等);
+// - 没设就用同源(Netlify 上走 /api 代理到 Render,无需手动配环境变量)。
+// - 本地开发在 frontend/.env.local 里设 NEXT_PUBLIC_API_BASE=http://localhost:8000
+const BASE = process.env.NEXT_PUBLIC_API_BASE ?? "";
 
 async function request(path, { method = "GET", body } = {}) {
   let r;

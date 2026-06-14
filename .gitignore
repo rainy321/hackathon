@@ -1,6 +1,8 @@
 # secrets
 .env
 backend/.env
+*.env.local
+frontend/.env.local
 
 # sqlite db
 *.db
