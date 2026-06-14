@@ -1,9 +1,6 @@
 import "./globals.css";
-import { Geist } from "next/font/google";
 import { GrowthProvider } from "./providers";
 import Shell from "./shell";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
 
 export const metadata = {
   title: "Growth OS · 长期成长操作系统",
@@ -12,7 +9,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="zh-CN" className={geist.variable}>
+    <html lang="zh-CN">
       <body className="min-h-screen antialiased">
         <GrowthProvider>
           <Shell>{children}</Shell>

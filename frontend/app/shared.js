@@ -1,9 +1,9 @@
 // 共享常量与工具函数(多页面共用)
 
 export const diffStyle = {
-  高: "bg-[#ffe1e1] text-[#ff3b30]",
-  中: "bg-[#ffe9d6] text-[#f08a00]",
-  低: "bg-[#d6f5e2] text-[#34c759]",
+  高: "bg-[#ffebee] text-[#f44336]",
+  中: "bg-[#fff8e1] text-[#ffa000]",
+  低: "bg-[#e8f5e9] text-[#4caf50]",
 };
 export const TONES = ["温暖朋友", "严格教练", "幽默伙伴"];
 
@@ -23,10 +23,10 @@ export const FEEDBACK = {
 };
 
 export const PRESETS = [
-  { label: "✅顺利", done: true, quality: 5, note: "顺利完成", cls: "bg-[#34c759]" },
-  { label: "勉强", done: true, quality: 3, note: "勉强完成", cls: "bg-[#ff9500]" },
-  { label: "😵加班", done: false, quality: 2, note: "加班没做", cls: "bg-[#ff3b30]" },
-  { label: "😵太累", done: false, quality: 1, note: "太累了", cls: "bg-[#8e8e93]" },
+  { label: "✅顺利", done: true, quality: 5, note: "顺利完成", cls: "bg-[#4caf50]" },
+  { label: "勉强", done: true, quality: 3, note: "勉强完成", cls: "bg-[#ffc107]" },
+  { label: "😵加班", done: false, quality: 2, note: "加班没做", cls: "bg-[#f44336]" },
+  { label: "😵太累", done: false, quality: 1, note: "太累了", cls: "bg-[#9e9e9e]" },
 ];
 
 // —— 日期工具(全部用 UTC,避免时区把"加一天"吃掉)——
