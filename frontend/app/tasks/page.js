@@ -53,6 +53,13 @@ export default function TasksPage() {
   useEffect(() => setViewDate(simDate), [simDate]);
   const isToday = viewDate === simDate;
 
+  // 自动读取用户已创建的目标,让「生成今日任务」每天都可用(目标只创建一次,不必重复拆解)
+  useEffect(() => {
+    if (uid && !createdGoalId) {
+      api.goals(uid).then((gs) => { if (gs && gs[0]) setCreatedGoalId(gs[0].id); }).catch(() => {});
+    }
+  }, [uid, createdGoalId]);
+
   const todays = tasks.filter((t) => t.date === viewDate);
   const doneToday = todays.filter((t) => t.status === "completed").length;
   const settledToday = todays.filter((t) => t.status === "completed" || t.status === "skipped").length;
