@@ -123,10 +123,10 @@ export default function TasksPage() {
   }
 
   async function onRegenerate() {
-    if (!createdGoalId) return;
     setPlanning(true);
     try {
-      await api.planToday(createdGoalId, simDate);
+      const gs = await api.goals(uid);
+      for (const g of gs) await api.planToday(g.id, simDate);
       await loadAll(uid);
     } catch (e) {
       setErr(String(e.message || e));
@@ -150,11 +150,12 @@ export default function TasksPage() {
   }
 
   async function onPlan() {
-    if (!createdGoalId) return;
     setPlanning(true);
     setErr("");
     try {
-      await api.planToday(createdGoalId, simDate);
+      // 给所有目标都生成当天任务(支持多目标并存,不会因为新建目标丢掉旧目标的任务)
+      const gs = await api.goals(uid);
+      for (const g of gs) await api.planToday(g.id, simDate);
       await loadAll(uid);
     } catch (e) {
       setErr(String(e.message || e));
@@ -309,7 +310,7 @@ export default function TasksPage() {
         </div>
 
         <div className="space-y-5">
-          <Card tone="accent" className="relative overflow-hidden xl:sticky xl:top-8">
+          <Card tone="accent" className="relative overflow-hidden">
             <BotanicalAccent className="absolute -bottom-12 -right-14 h-44 w-52 rotate-[-18deg] opacity-30" />
             <SectionTitle icon={Target} title="目标拆解" desc="输入长期目标,让 AI 拆出阶段与今天可执行的动作。" />
 
@@ -353,7 +354,7 @@ export default function TasksPage() {
                   </div>
                 ) : null}
 
-                <div className="space-y-4">
+                <div className="max-h-[45vh] space-y-4 overflow-y-auto pr-1">
                   {decomp.phases?.map((p, i) => (
                     <div key={i} className="border-l-2 border-accent/30 pl-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">
