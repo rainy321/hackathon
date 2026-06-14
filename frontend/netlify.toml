@@ -1,6 +1,17 @@
-# Netlify 配置:把 /api/* 请求代理转发到 Render 后端(浏览器只跟 Netlify 通信,不直连 onrender)
+# Netlify 配置:静态导出(out/)+ /api 代理到 Render
+[build]
+  command = "npm run build"
+  publish = "out"
+
+# /api 走代理 → Render(浏览器只跟 Netlify 通信,不直连 onrender)
 [[redirects]]
   from = "/api/*"
   to = "https://growth-os-backend.onrender.com/api/:splat"
   status = 200
   force = true
+
+# 其余路径用 index.html 兜底(支持刷新子路由 / 前端路由)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
