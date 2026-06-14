@@ -30,3 +30,9 @@ prompts.zip
 
 # 参考模板图(本地保留)
 linshi/
+
+# 本地/无关(不上传)
+.claude/
+build_excel*.py
+Growth_OS_对话记录.md
+make_chatlog.py
