@@ -1,12 +1,19 @@
 @import "tailwindcss";
 
+/* 对齐参考应用:shadcn/Geist 风 —— 近白底、近黑字、灰线、蓝色强调、Geist 字体 */
+@theme {
+  --color-paper: #fafafa;        /* 页面底(近白) */
+  --color-card: #ffffff;
+  --color-ink: #171717;          /* 近黑文字 */
+  --color-inksoft: #404040;
+  --color-muted: #737373;        /* 次要文字 */
+  --color-line: #e5e5e5;         /* 发丝线 */
+  --color-accent: #1447e6;       /* 蓝色强调 */
+  --color-accentsoft: #eef3ff;
+}
+
 :root {
-  --bg: #f4f5f7;
-  --card: #ffffff;
-  --ink: #0f172a;
-  --muted: #64748b;
-  --line: #e5e7eb;
-  --brand: #4f46e5;
+  --bg: #fafafa;
 }
 
 html,
@@ -16,7 +23,13 @@ body {
 
 body {
   background: var(--bg);
-  color: var(--ink);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Microsoft YaHei", "PingFang SC", sans-serif;
+  color: #171717;
+  font-family: var(--font-geist), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.011em;
 }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #d4d4d4; border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
