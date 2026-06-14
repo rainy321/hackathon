@@ -16,7 +16,7 @@ PROMPTS_DIR = BACKEND.parent / "prompts"
 ENV_FILE = BACKEND / ".env"
 
 DEFAULT_BASE_URL = "https://open.bigmodel.cn/api/paas/v4"
-DEFAULT_MODEL = "glm-4-flash"
+DEFAULT_MODEL = "glm-4-flashx"   # flash 比 flashx 慢约 4 倍,用 flashx 避免代理超时 504
 
 
 # ---------------- 配置 ----------------
