@@ -16,3 +16,7 @@ node_modules/
 
 # build artifacts / handoff
 growth_os_handoff.zip
+
+# 内部分工文档(不上传公开仓库,本地保留)
+docs/给Zack的任务说明书.md
+docs/给队友的任务说明书.md
