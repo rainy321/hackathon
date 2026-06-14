@@ -30,6 +30,8 @@ def _migrate(conn):
         conn.execute("ALTER TABLE user ADD COLUMN tone TEXT DEFAULT '温暖朋友'")
     if "password" not in _existing_cols(conn, "user"):
         conn.execute("ALTER TABLE user ADD COLUMN password TEXT")
+    if "created_at" not in _existing_cols(conn, "goal"):
+        conn.execute("ALTER TABLE goal ADD COLUMN created_at TEXT")
 
 
 def init_db(reset=False):

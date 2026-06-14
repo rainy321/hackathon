@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """数据库操作。每个函数自带连接,返回 dict / list[dict]。"""
 import json
+import re
 from datetime import date, datetime, timedelta
 from uuid import uuid4
 import auth
@@ -104,13 +105,13 @@ def get_goal(gid):
 
 
 def create_goal(gid, user_id, title, category, time_horizon, status,
-                decomposition=None):
+                decomposition=None, start_date=None):
     decomp_json = json.dumps(decomposition, ensure_ascii=False) if decomposition else None
     with get_conn() as c:
         c.execute(
-            "INSERT INTO goal(id,user_id,title,category,time_horizon,status,decomposition) "
-            "VALUES(?,?,?,?,?,?,?)",
-            (gid, user_id, title, category, time_horizon, status, decomp_json),
+            "INSERT INTO goal(id,user_id,title,category,time_horizon,status,decomposition,created_at) "
+            "VALUES(?,?,?,?,?,?,?,?)",
+            (gid, user_id, title, category, time_horizon, status, decomp_json, start_date),
         )
         c.commit()
         r = c.execute("SELECT * FROM goal WHERE id=?", (gid,)).fetchone()
@@ -139,6 +140,52 @@ def complete_goal(gid):
         c.commit()
         r = c.execute("SELECT * FROM goal WHERE id=?", (gid,)).fetchone()
         return dict(r) if r else None
+
+
+def horizon_to_days(h):
+    """把 '1个月'/'3个月'/'1周'/'30天'/'2 weeks' 等转成天数(月=30,年=365)。"""
+    if not h:
+        return 30
+    m = re.search(r"(\d+(?:\.\d+)?)", h)
+    n = float(m.group(1)) if m else 1
+    low = h.lower()
+    if "月" in h or "mon" in low:
+        n *= 30
+    elif "周" in h or "week" in low or low.strip() == "w":
+        n *= 7
+    elif "年" in h or "year" in low or low.strip() == "y":
+        n *= 365
+    return max(1, int(n))
+
+
+def goal_days_left(row, today):
+    """某目标还剩多少天到期(负数=已过期)。无开始日期返回 None。"""
+    start = row["created_at"] if isinstance(row, dict) else row["created_at"]
+    if not start:
+        return None
+    try:
+        start_d = datetime.strptime(start, "%Y-%m-%d").date()
+        today_d = datetime.strptime(today, "%Y-%m-%d").date()
+    except Exception:
+        return None
+    end_d = start_d + timedelta(days=horizon_to_days(row["time_horizon"]))
+    return (end_d - today_d).days
+
+
+def complete_due_goals(uid, today):
+    """自动把已到期的进行中目标标记完成,返回本次刚完成的列表。"""
+    newly = []
+    with get_conn() as c:
+        rows = c.execute(
+            "SELECT * FROM goal WHERE user_id=? AND status!='done'", (uid,)).fetchall()
+        for r in rows:
+            left = goal_days_left(r, today)
+            if left is not None and left <= 0:
+                c.execute("UPDATE goal SET status='done' WHERE id=?", (r["id"],))
+                newly.append(_safe(r))
+        if newly:
+            c.commit()
+    return newly
 
 
 def goal_decomposition(gid):

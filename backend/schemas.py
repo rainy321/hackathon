@@ -30,6 +30,7 @@ class GoalCreate(BaseModel):
     category: Optional[str] = None
     time_horizon: Optional[str] = None
     status: str = "active"
+    start_date: Optional[str] = None
 
 
 class Task(BaseModel):

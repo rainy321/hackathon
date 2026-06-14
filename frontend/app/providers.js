@@ -17,6 +17,7 @@ export function GrowthProvider({ children }) {
   // 陪伴小人
   const [compOpen, setCompOpen] = useState(false);
   const [messages, setMessages] = useState([]);
+  const [newlyCompleted, setNewlyCompleted] = useState([]);
 
   const uid = me?.id || "";
   const tone = me?.tone || "温暖朋友";
@@ -41,6 +42,17 @@ export function GrowthProvider({ children }) {
       .then(([d, m, t]) => { setDash(d); setMem(m); setTasks(t); })
       .catch(() => {});
   }, []);
+
+  // 进入或快进到新一天 → 检查到期目标自动完成(刚完成的用于弹窗)+ 刷新数据
+  useEffect(() => {
+    if (!uid) return;
+    api.checkDue(uid, simDate)
+      .then((r) => { if (r && r.newly_completed && r.newly_completed.length) setNewlyCompleted(r.newly_completed); })
+      .catch(() => {});
+    loadAll(uid);
+  }, [uid, simDate, loadAll]);
+
+  function clearCelebration() { setNewlyCompleted([]); }
 
   useEffect(() => { if (uid) loadAll(uid); }, [uid, loadAll]);
 
@@ -82,6 +94,7 @@ export function GrowthProvider({ children }) {
     dash, mem, tasks, setTasks, loadAll, refreshDash,
     login, logout, updateMe, fastForward,
     compOpen, messages, toggleCompanion, sendCompanion,
+    newlyCompleted, clearCelebration,
   };
 
   return <GrowthCtx.Provider value={value}>{children}</GrowthCtx.Provider>;

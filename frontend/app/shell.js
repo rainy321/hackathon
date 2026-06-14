@@ -327,7 +327,7 @@ function NavLink({ item, active }) {
 function MobileNav({ path }) {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-line/70 bg-[rgba(255,250,242,0.86)] px-2 py-2 shadow-[0_-8px_24px_rgba(84,74,58,0.1)] backdrop-blur-xl lg:hidden">
-      <div className="mx-auto grid max-w-md grid-cols-3 gap-1">
+      <div className="mx-auto grid max-w-md grid-cols-4 gap-1">
         {NAV.map((n) => {
           const Icon = n.icon;
           const active = path === n.href;
@@ -343,8 +343,24 @@ function MobileNav({ path }) {
   );
 }
 
+function CelebrationModal({ goals, onClose }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-5" onClick={onClose}>
+      <div className="w-full max-w-md rounded-lg border border-warn/30 bg-card p-7 text-center shadow-[var(--shadow-soft)]" onClick={(e) => e.stopPropagation()}>
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-warn text-white shadow-[var(--shadow-pressed)]"><Trophy size={30} /></div>
+        <div className="text-lg font-bold text-ink">恭喜!目标到期达成 🎉</div>
+        <div className="mt-3 space-y-1.5">
+          {goals.map((g) => <div key={g.id} className="rounded-md bg-warnsoft px-3 py-2 text-sm font-semibold text-ink">{g.title}</div>)}
+        </div>
+        <p className="mt-4 text-xs leading-5 text-text2">系统检测到这个目标已到完成日,自动移入成就墙。</p>
+        <button onClick={onClose} className="mt-5 w-full rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#72965e]">收下,继续成长</button>
+      </div>
+    </div>
+  );
+}
+
 export default function Shell({ children }) {
-  const { me, logout, simDate, dayN, tone } = useGrowth();
+  const { me, logout, simDate, dayN, tone, newlyCompleted, clearCelebration } = useGrowth();
   const [profile, setProfile] = useState(false);
   const path = usePathname();
 
@@ -432,6 +448,7 @@ export default function Shell({ children }) {
       <Companion />
       <MobileNav path={path} />
       {profile ? <ProfileModal onClose={() => setProfile(false)} /> : null}
+      {newlyCompleted && newlyCompleted.length > 0 ? <CelebrationModal goals={newlyCompleted} onClose={clearCelebration} /> : null}
     </div>
   );
 }

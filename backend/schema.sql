@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS goal (
     category       TEXT,                          -- 学习 / 健康
     time_horizon   TEXT,
     status         TEXT DEFAULT 'active',         -- active / paused / done
-    decomposition  TEXT                           -- Goal Decomposer 输出的 JSON
+    decomposition  TEXT,                          -- Goal Decomposer 输出的 JSON
+    created_at     TEXT                           -- 开始日期(YYYY-MM-DD),倒计时/到期自动完成用
 );
 
 CREATE TABLE IF NOT EXISTS task (

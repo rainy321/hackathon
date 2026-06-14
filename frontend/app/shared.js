@@ -42,6 +42,25 @@ export function addDay(iso, n) {
 export function dayDiff(a, b) {
   return Math.round((new Date(b + "T00:00:00Z") - new Date(a + "T00:00:00Z")) / 86400000);
 }
+export function horizonToDays(h) {
+  if (!h) return 30;
+  const m = String(h).match(/(\d+(?:\.\d+)?)/);
+  let n = m ? parseFloat(m[1]) : 1;
+  const low = String(h).toLowerCase();
+  if (h.includes("月") || low.includes("mon")) n *= 30;
+  else if (h.includes("周") || low.includes("week") || low.trim() === "w") n *= 7;
+  else if (h.includes("年") || low.includes("year") || low.trim() === "y") n *= 365;
+  return Math.max(1, Math.round(n));
+}
+// 目标还剩多少天到期(基于 created_at + time_horizon);无开始日期返回 null
+export function goalDaysLeft(g, today) {
+  if (!g.created_at) return null;
+  const start = new Date(g.created_at + "T00:00:00Z");
+  const now = new Date(today + "T00:00:00Z");
+  if (isNaN(start) || isNaN(now)) return null;
+  const end = new Date(start.getTime() + horizonToDays(g.time_horizon) * 86400000);
+  return Math.round((end - now) / 86400000);
+}
 export function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 // —— 陪伴小人对话 ——

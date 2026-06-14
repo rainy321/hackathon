@@ -125,6 +125,14 @@ def api_complete_goal(gid: str):
     return g
 
 
+@app.post("/api/goals/check-due")
+def api_check_due(p: dict = Body(...)):
+    """检查并自动完成到期目标,返回本次刚完成的(前端用于弹窗提醒)。"""
+    newly = crud.complete_due_goals(p.get("user_id"),
+                                    p.get("date") or date.today().isoformat())
+    return {"newly_completed": newly}
+
+
 @app.post("/api/goals")
 def api_create_goal(body: schemas.GoalCreate):
     """创建目标 → 自动调 Goal Decomposer → 拆解结果存进 goal.decomposition。"""
@@ -135,7 +143,8 @@ def api_create_goal(body: schemas.GoalCreate):
     ai_goal = f"{body.title}（类别:{body.category}）" if body.category else body.title
     decomp = ai_adapter.goal_decomposer(ai_goal, body.time_horizon or "", baseline)
     return crud.create_goal(gid, body.user_id, body.title, body.category,
-                            body.time_horizon, body.status, decomp)
+                            body.time_horizon, body.status, decomp,
+                            start_date=body.start_date)
 
 
 @app.post("/api/goals/{gid}/plan")

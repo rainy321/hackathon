@@ -20,7 +20,7 @@ import {
 import { useGrowth } from "../providers";
 import { api } from "@/lib/api";
 import { Bar, BotanicalAccent, Btn, Card, EmptyState, PageHeader, SectionTitle, Tag } from "../ui";
-import { FEEDBACK, PRESETS, addDay, pick } from "../shared";
+import { FEEDBACK, PRESETS, addDay, goalDaysLeft, pick } from "../shared";
 
 const diffTone = { 高: "danger", 中: "warn", 低: "accent" };
 
@@ -61,7 +61,7 @@ export default function TasksPage() {
       setMyGoals(gs || []);
       if (!createdGoalId && gs && gs[0]) setCreatedGoalId(gs[0].id);
     }).catch(() => {});
-  }, [uid]);
+  }, [uid, simDate]);
 
   const todays = tasks.filter((t) => t.date === viewDate);
   const doneToday = todays.filter((t) => t.status === "completed").length;
@@ -143,7 +143,7 @@ export default function TasksPage() {
     setDecomp(null);
     setCreatedGoalId("");
     try {
-      const r = await api.createGoal({ user_id: uid, title: goal, time_horizon: horizon, category });
+      const r = await api.createGoal({ user_id: uid, title: goal, time_horizon: horizon, category, start_date: simDate });
       setDecomp(r.decomposition || null);
       setCreatedGoalId(r.id || "");
       api.goals(uid).then(setMyGoals).catch(() => {});
@@ -422,6 +422,7 @@ export default function TasksPage() {
               {active.map((g) => {
                 let d = null;
                 try { d = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
+                const left = goalDaysLeft(g, simDate);
                 return (
                   <li key={g.id} className="rounded-md border border-line bg-paper px-3 py-2.5">
                     <div className="flex items-start justify-between gap-2">
@@ -431,6 +432,7 @@ export default function TasksPage() {
                           {g.category ? <Tag tone="neutral">{g.category}</Tag> : null}
                           {g.time_horizon ? <Tag tone="neutral">{g.time_horizon}</Tag> : null}
                           {d?.phases?.length ? <Tag tone="accent">{d.phases.length} 阶段</Tag> : null}
+                          {left === null ? null : left > 3 ? <Tag tone="info">还剩 {left} 天</Tag> : left > 0 ? <Tag tone="warn">即将结束·加油!({left}天)</Tag> : <Tag tone="danger">已到期</Tag>}
                         </div>
                       </div>
                       <div className="flex shrink-0 gap-1">
