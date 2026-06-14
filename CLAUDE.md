@@ -26,9 +26,9 @@
   - `app/layout.js` `app/shell.js`(左侧栏 + 陪伴小人 + 登录门禁) `app/providers.js`(全局状态) `app/ui.js`(Card/Stat/Btn/Bar) `app/shared.js`(常量+工具)
   - 页面:`app/page.js`(总览) `app/tasks/page.js`(今日任务) `app/review/page.js`(AI 复盘)
   - `lib/api.js` 后端 API 客户端
-- `prompts/` 4 个 Prompt 文本(队友维护)
+- `prompts/` 4 个 Prompt 文本
 - `mock/` 演示种子数据(3 用户/3 目标/84 任务/84 日志/15 记忆)
-- `docs/` 数据契约、任务说明书、路演技术实现、部署指南、给队友原理与任务
+- `docs/` 数据契约、部署指南、路演技术实现
 - `render.yaml` Render Blueprint(后端一键部署)
 
 ## 数据模型(5 表,详见 `schema.sql` 与 `docs/数据契约.md`)
