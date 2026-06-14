@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """AI Adapter:单 Agent + 4 个 Prompt 函数。
-- Prompt 文本从 ../prompts/*.txt 读取(队友维护,改 prompt 不动代码)。
+- Prompt 文本从 ../prompts/*.txt 读取(改 prompt 不动代码)。
 - 调用模式:system=Prompt 全文,user=输入 JSON。Prompt 本身要求只输出合法 JSON。
 - 配置走 backend/.env(见数据契约)。没 key 或 AI_MOCK=1 时走 Mock,整个闭环可离线跑。
 """

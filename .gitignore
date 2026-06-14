@@ -19,10 +19,15 @@ node_modules/
 # build artifacts / handoff
 growth_os_handoff.zip
 
-# 内部分工文档(不上传公开仓库,本地保留)
-docs/给Zack的任务说明书.md
-docs/给队友的任务说明书.md
-docs/给队友_原理与任务.md
+# local planning notes
+docs/*任务说明书.md
+docs/*原理与任务.md
+
+# local agent context
+AGENTS.md
+CLAUDE.md
+frontend/AGENTS.md
+frontend/CLAUDE.md
 
 # 规划文件 / 打包产物(本地保留,不上传)
 Growth_OS_规划*.xlsx
