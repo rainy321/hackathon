@@ -34,6 +34,7 @@ export const api = {
   checkin: (tid, body) => request("/api/tasks/" + tid + "/checkin", { method: "POST", body }),
   decompose: (body) => request("/api/ai/decompose", { method: "POST", body }),
   createGoal: (body) => request("/api/goals", { method: "POST", body }),
+  deleteGoal: (gid) => request("/api/goals/" + gid, { method: "DELETE" }),
   planToday: (gid, date) =>
     request("/api/goals/" + gid + "/plan", { method: "POST", body: date ? { date } : {} }),
   createUser: (body) => request("/api/users", { method: "POST", body }),

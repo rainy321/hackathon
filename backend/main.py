@@ -109,6 +109,13 @@ def api_goal(gid: str):
     return g
 
 
+@app.delete("/api/goals/{gid}")
+def api_delete_goal(gid: str):
+    """删除目标(及其任务/日志),从每日生成池子移除。"""
+    crud.delete_goal(gid)
+    return {"deleted": True}
+
+
 @app.post("/api/goals")
 def api_create_goal(body: schemas.GoalCreate):
     """创建目标 → 自动调 Goal Decomposer → 拆解结果存进 goal.decomposition。"""

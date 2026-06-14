@@ -50,15 +50,18 @@ export default function TasksPage() {
   const [err, setErr] = useState("");
   const [toast, setToast] = useState("");
   const [viewDate, setViewDate] = useState(simDate);
+  const [myGoals, setMyGoals] = useState([]);
   useEffect(() => setViewDate(simDate), [simDate]);
   const isToday = viewDate === simDate;
 
-  // 自动读取用户已创建的目标,让「生成今日任务」每天都可用(目标只创建一次,不必重复拆解)
+  // 自动读取用户的所有目标:既让「生成今日任务」可用,也填到「我的目标」池子
   useEffect(() => {
-    if (uid && !createdGoalId) {
-      api.goals(uid).then((gs) => { if (gs && gs[0]) setCreatedGoalId(gs[0].id); }).catch(() => {});
-    }
-  }, [uid, createdGoalId]);
+    if (!uid) return;
+    api.goals(uid).then((gs) => {
+      setMyGoals(gs || []);
+      if (!createdGoalId && gs && gs[0]) setCreatedGoalId(gs[0].id);
+    }).catch(() => {});
+  }, [uid]);
 
   const todays = tasks.filter((t) => t.date === viewDate);
   const doneToday = todays.filter((t) => t.status === "completed").length;
@@ -143,10 +146,22 @@ export default function TasksPage() {
       const r = await api.createGoal({ user_id: uid, title: goal, time_horizon: horizon, category });
       setDecomp(r.decomposition || null);
       setCreatedGoalId(r.id || "");
+      api.goals(uid).then(setMyGoals).catch(() => {});
     } catch (e) {
       setErr(String(e.message || e));
     }
     setBusy(false);
+  }
+
+  async function onDeleteGoal(gid) {
+    try {
+      await api.deleteGoal(gid);
+      const gs = await api.goals(uid);
+      setMyGoals(gs || []);
+      await loadAll(uid);
+    } catch (e) {
+      setErr(String(e.message || e));
+    }
   }
 
   async function onPlan() {
@@ -385,6 +400,33 @@ export default function TasksPage() {
           </Card>
         </div>
       </div>
+
+      {myGoals.length > 0 ? (
+        <Card className="mt-5">
+          <SectionTitle icon={Target} title="我的目标" desc="每日任务从这个池子生成;不需要的目标可删除(删了就不再每天生成)。" />
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {myGoals.map((g) => {
+              let d = null;
+              try { d = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
+              return (
+                <li key={g.id} className="rounded-md border border-line bg-paper px-3 py-2.5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="truncate text-sm font-semibold text-ink">{g.title}</div>
+                      <div className="mt-1 flex flex-wrap gap-1.5">
+                        {g.category ? <Tag tone="neutral">{g.category}</Tag> : null}
+                        {g.time_horizon ? <Tag tone="neutral">{g.time_horizon}</Tag> : null}
+                        {d?.phases?.length ? <Tag tone="accent">{d.phases.length} 阶段</Tag> : null}
+                      </div>
+                    </div>
+                    <button onClick={() => onDeleteGoal(g.id)} className="shrink-0 rounded-md border border-line px-2 py-1 text-xs text-text2 transition hover:text-danger">删除</button>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </Card>
+      ) : null}
     </>
   );
 }

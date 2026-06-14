@@ -120,6 +120,18 @@ def create_goal(gid, user_id, title, category, time_horizon, status,
         return g
 
 
+def delete_goal(gid):
+    """删除目标及其所有任务和行为日志(从每日生成池子里移除)。"""
+    with get_conn() as c:
+        c.execute(
+            "DELETE FROM behavior_log WHERE task_id IN "
+            "(SELECT id FROM task WHERE goal_id=?)", (gid,))
+        c.execute("DELETE FROM task WHERE goal_id=?", (gid,))
+        c.execute("DELETE FROM goal WHERE id=?", (gid,))
+        c.commit()
+    return True
+
+
 def goal_decomposition(gid):
     """取出 goal 的拆解结果(已解析)。返回 (goal_dict, phases or None)。"""
     with get_conn() as c:
