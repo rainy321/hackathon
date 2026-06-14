@@ -1,0 +1,21 @@
+# Render Blueprint:后端一键部署。
+# 用法:Render → New → Blueprint → 连接本仓库 → 自动读取此文件,你只需填 GLM_API_KEY。
+services:
+  - type: web
+    name: growth-os-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: GLM_API_KEY          # 部署时 Render 会单独让你填(不写进仓库)
+        sync: false
+      - key: GLM_BASE_URL
+        value: https://open.bigmodel.cn/api/paas/v4
+      - key: GLM_MODEL
+        value: glm-4-flash
+      - key: AI_MOCK
+        value: "0"
