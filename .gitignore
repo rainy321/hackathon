@@ -13,3 +13,6 @@ __pycache__/
 # node
 node_modules/
 .next/
+
+# build artifacts / handoff
+growth_os_handoff.zip
