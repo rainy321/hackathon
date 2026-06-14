@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -18,9 +19,11 @@ import {
   Star,
   Target,
   TrendingUp,
+  Trophy,
   UserRound,
 } from "lucide-react";
 import { useGrowth } from "./providers";
+import { api } from "@/lib/api";
 import { Bar, BotanicalAccent, Card, EmptyState, PageHeader, SectionTitle, Stat, Tag } from "./ui";
 
 const pct = (n) => Math.round((n || 0) * 100);
@@ -35,6 +38,12 @@ const TIMELINE = [
 
 export default function Overview() {
   const { me, dash, mem, tasks, simDate, dayN, tone } = useGrowth();
+  const uid = me?.id || "";
+  const [doneCount, setDoneCount] = useState(0);
+  useEffect(() => {
+    if (!uid) return;
+    api.goals(uid).then((gs) => setDoneCount((gs || []).filter((g) => g.status === "done").length)).catch(() => {});
+  }, [uid]);
   const todays = tasks.filter((t) => t.date === simDate);
   const doneToday = todays.filter((t) => t.status === "completed").length;
   const skippedToday = todays.filter((t) => t.status === "skipped").length;
@@ -145,6 +154,15 @@ export default function Overview() {
         <Stat label="平均质量" value={dash ? dash.avg_quality : "-"} sub="5 分制评分" icon={Star} tone="info" />
         <Stat label="近 7 天" value={dash ? `${pct(recent.rate)}%` : "-"} sub={dash ? `${recent.done}/${recent.total} 条记录` : "等待打卡"} icon={TrendingUp} />
       </div>
+
+      <Link href="/achievements" className="mt-5 flex items-center gap-4 rounded-lg border border-warn/25 bg-warnsoft p-5 shadow-[var(--shadow-card)] transition hover:border-warn/45">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-warn text-white shadow-[var(--shadow-pressed)]"><Trophy size={22} /></span>
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-bold text-ink">成就墙 · 已完成 {doneCount} 个目标</div>
+          <div className="text-xs leading-5 text-text2">每一个完成的目标都收在这里,点开看看你的成长里程碑</div>
+        </div>
+        <ArrowRight size={18} className="shrink-0 text-warn" />
+      </Link>
 
       <div className="mt-5 grid grid-cols-1 gap-5 xl:grid-cols-[0.9fr_1.1fr]">
         <Card>

@@ -132,6 +132,15 @@ def delete_goal(gid):
     return True
 
 
+def complete_goal(gid):
+    """标记目标完成(移入成就池,不再每天生成)。"""
+    with get_conn() as c:
+        c.execute("UPDATE goal SET status=? WHERE id=?", ("done", gid))
+        c.commit()
+        r = c.execute("SELECT * FROM goal WHERE id=?", (gid,)).fetchone()
+        return dict(r) if r else None
+
+
 def goal_decomposition(gid):
     """取出 goal 的拆解结果(已解析)。返回 (goal_dict, phases or None)。"""
     with get_conn() as c:

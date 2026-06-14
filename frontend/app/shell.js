@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   Sparkles,
   Sprout,
+  Trophy,
   UserRound,
 } from "lucide-react";
 import { useGrowth } from "./providers";
@@ -29,6 +30,7 @@ const NAV = [
   { href: "/", label: "总览", icon: LayoutDashboard },
   { href: "/tasks", label: "今日任务", icon: ListChecks },
   { href: "/review", label: "AI 复盘", icon: Brain },
+  { href: "/achievements", label: "成就", icon: Trophy },
 ];
 
 function Field({ label, value, onChange, type = "text", placeholder = "" }) {

@@ -128,7 +128,7 @@ export default function TasksPage() {
   async function onRegenerate() {
     setPlanning(true);
     try {
-      const gs = await api.goals(uid);
+      const gs = (await api.goals(uid)).filter((g) => g.status !== "done");
       for (const g of gs) await api.planToday(g.id, simDate);
       await loadAll(uid);
     } catch (e) {
@@ -164,12 +164,23 @@ export default function TasksPage() {
     }
   }
 
+  async function onCompleteGoal(gid) {
+    try {
+      await api.completeGoal(gid);
+      const gs = await api.goals(uid);
+      setMyGoals(gs || []);
+      await loadAll(uid);
+    } catch (e) {
+      setErr(String(e.message || e));
+    }
+  }
+
   async function onPlan() {
     setPlanning(true);
     setErr("");
     try {
-      // 给所有目标都生成当天任务(支持多目标并存,不会因为新建目标丢掉旧目标的任务)
-      const gs = await api.goals(uid);
+      // 只给进行中的目标生成(已完成的目标不再生成)
+      const gs = (await api.goals(uid)).filter((g) => g.status !== "done");
       for (const g of gs) await api.planToday(g.id, simDate);
       await loadAll(uid);
     } catch (e) {
@@ -401,32 +412,39 @@ export default function TasksPage() {
         </div>
       </div>
 
-      {myGoals.length > 0 ? (
-        <Card className="mt-5">
-          <SectionTitle icon={Target} title="我的目标" desc="每日任务从这个池子生成;不需要的目标可删除(删了就不再每天生成)。" />
-          <ul className="grid gap-2 sm:grid-cols-2">
-            {myGoals.map((g) => {
-              let d = null;
-              try { d = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
-              return (
-                <li key={g.id} className="rounded-md border border-line bg-paper px-3 py-2.5">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="min-w-0">
-                      <div className="truncate text-sm font-semibold text-ink">{g.title}</div>
-                      <div className="mt-1 flex flex-wrap gap-1.5">
-                        {g.category ? <Tag tone="neutral">{g.category}</Tag> : null}
-                        {g.time_horizon ? <Tag tone="neutral">{g.time_horizon}</Tag> : null}
-                        {d?.phases?.length ? <Tag tone="accent">{d.phases.length} 阶段</Tag> : null}
+      {(() => {
+        const active = myGoals.filter((g) => g.status !== "done");
+        if (!active.length) return null;
+        return (
+          <Card className="mt-5">
+            <SectionTitle icon={Target} title="我的目标" desc="每日任务从这里生成;完成了点✓移入成就,不需要的点删除。" />
+            <ul className="grid gap-2 sm:grid-cols-2">
+              {active.map((g) => {
+                let d = null;
+                try { d = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
+                return (
+                  <li key={g.id} className="rounded-md border border-line bg-paper px-3 py-2.5">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="truncate text-sm font-semibold text-ink">{g.title}</div>
+                        <div className="mt-1 flex flex-wrap gap-1.5">
+                          {g.category ? <Tag tone="neutral">{g.category}</Tag> : null}
+                          {g.time_horizon ? <Tag tone="neutral">{g.time_horizon}</Tag> : null}
+                          {d?.phases?.length ? <Tag tone="accent">{d.phases.length} 阶段</Tag> : null}
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 gap-1">
+                        <button onClick={() => onCompleteGoal(g.id)} className="rounded-md border border-accent/40 bg-accentsoft px-2 py-1 text-xs font-semibold text-accent transition hover:bg-accent hover:text-white">完成</button>
+                        <button onClick={() => onDeleteGoal(g.id)} className="rounded-md border border-line px-2 py-1 text-xs text-text2 transition hover:text-danger">删除</button>
                       </div>
                     </div>
-                    <button onClick={() => onDeleteGoal(g.id)} className="shrink-0 rounded-md border border-line px-2 py-1 text-xs text-text2 transition hover:text-danger">删除</button>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </Card>
-      ) : null}
+                  </li>
+                );
+              })}
+            </ul>
+          </Card>
+        );
+      })()}
     </>
   );
 }

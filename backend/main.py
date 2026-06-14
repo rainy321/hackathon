@@ -116,6 +116,15 @@ def api_delete_goal(gid: str):
     return {"deleted": True}
 
 
+@app.post("/api/goals/{gid}/complete")
+def api_complete_goal(gid: str):
+    """标记目标完成(移入成就池,不再每天生成)。"""
+    g = crud.complete_goal(gid)
+    if not g:
+        raise HTTPException(404, "goal not found")
+    return g
+
+
 @app.post("/api/goals")
 def api_create_goal(body: schemas.GoalCreate):
     """创建目标 → 自动调 Goal Decomposer → 拆解结果存进 goal.decomposition。"""
