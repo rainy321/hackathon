@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """SQLite 连接与初始化。schema.sql 是表结构的唯一来源。"""
+import logging
 import sqlite3
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 BASE = Path(__file__).resolve().parent
 DB_PATH = BASE / "growth_os.db"
@@ -36,6 +39,8 @@ def _migrate(conn):
 
 def init_db(reset=False):
     """建表(IF NOT EXISTS,安全)。reset=True 先 DROP 再建。每次都会跑迁移补列。"""
+    if not SCHEMA_PATH.exists():
+        raise FileNotFoundError(f"Schema file missing: {SCHEMA_PATH}")
     schema = SCHEMA_PATH.read_text(encoding="utf-8")
     conn = get_conn()
     try:
@@ -45,6 +50,9 @@ def init_db(reset=False):
         conn.executescript(schema)
         _migrate(conn)
         conn.commit()
+    except Exception:
+        logger.exception("Database initialization failed")
+        raise
     finally:
         conn.close()
     return DB_PATH

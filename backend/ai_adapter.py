@@ -5,11 +5,14 @@
 - 配置走 backend/.env(见数据契约)。没 key 或 AI_MOCK=1 时走 Mock,整个闭环可离线跑。
 """
 import json
+import logging
 import os
 import re
 import urllib.request
 import urllib.error
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 BACKEND = Path(__file__).resolve().parent
 PROMPTS_DIR = BACKEND.parent / "prompts"
@@ -68,11 +71,24 @@ def call_llm(messages, model=None, temperature=0.7, timeout=40):
     )
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
-            body = json.loads(r.read().decode("utf-8"))
+            raw = r.read().decode("utf-8")
+            try:
+                body = json.loads(raw)
+            except json.JSONDecodeError as e:
+                raise RuntimeError(
+                    f"LLM returned non-JSON response: {raw[:200]}"
+                ) from e
     except urllib.error.HTTPError as e:
         detail = e.read().decode("utf-8", "replace")
-        raise RuntimeError(f"LLM HTTP {e.code}: {detail}") from None
-    return body["choices"][0]["message"]["content"]
+        raise RuntimeError(f"LLM HTTP {e.code}: {detail}") from e
+    except urllib.error.URLError as e:
+        raise RuntimeError(f"LLM connection failed: {e.reason}") from e
+    try:
+        return body["choices"][0]["message"]["content"]
+    except (KeyError, IndexError, TypeError) as e:
+        raise RuntimeError(
+            f"Unexpected LLM response structure: {json.dumps(body)[:300]}"
+        ) from e
 
 
 def parse_json_text(text):
@@ -83,8 +99,8 @@ def parse_json_text(text):
         text = re.sub(r"\n?```$", "", text).strip()
     try:
         return json.loads(text)
-    except Exception:
-        pass
+    except json.JSONDecodeError as first_err:
+        logger.debug("Direct JSON parse failed, trying regex extraction: %s", first_err)
     m = re.search(r"(\{.*\}|\[.*\])", text, re.S)
     if m:
         return json.loads(m.group(1))
@@ -95,6 +111,8 @@ def parse_json_text(text):
 def _run(prompt_name, input_dict, mock_fn):
     cfg = get_config()
     if cfg["mock"] or not cfg["api_key"]:
+        if not cfg["api_key"]:
+            logger.info("%s: no API key configured, using mock", prompt_name)
         return mock_fn()
     messages = [
         {"role": "system", "content": load_prompt(prompt_name)},
@@ -104,8 +122,11 @@ def _run(prompt_name, input_dict, mock_fn):
         text = call_llm(messages, model=cfg["model"])
         return parse_json_text(text)
     except Exception as e:
-        # 黑客松演示优先保证闭环不断:真实 LLM 失败时退回结构化 Mock。
-        print(f"[ai_adapter] {prompt_name} fallback to mock: {type(e).__name__}: {e}")
+        logger.warning(
+            "%s fallback to mock due to %s: %s",
+            prompt_name, type(e).__name__, e,
+            exc_info=True,
+        )
         return mock_fn()
 
 

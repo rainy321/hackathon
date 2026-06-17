@@ -60,7 +60,10 @@ export default function TasksPage() {
     api.goals(uid).then((gs) => {
       setMyGoals(gs || []);
       if (!createdGoalId && gs && gs[0]) setCreatedGoalId(gs[0].id);
-    }).catch(() => {});
+    }).catch((e) => {
+      console.error("Failed to load goals:", e);
+      setErr(String(e.message || e));
+    });
   }, [uid, simDate]);
 
   const todays = tasks.filter((t) => t.date === viewDate);
@@ -146,7 +149,7 @@ export default function TasksPage() {
       const r = await api.createGoal({ user_id: uid, title: goal, time_horizon: horizon, category, start_date: simDate });
       setDecomp(r.decomposition || null);
       setCreatedGoalId(r.id || "");
-      api.goals(uid).then(setMyGoals).catch(() => {});
+      api.goals(uid).then(setMyGoals).catch((e) => console.error("Failed to refresh goals after creation:", e));
     } catch (e) {
       setErr(String(e.message || e));
     }

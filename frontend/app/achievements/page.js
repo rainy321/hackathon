@@ -21,10 +21,14 @@ const MILESTONES = [
 export default function AchievementsPage() {
   const { uid, dash, dayN } = useGrowth();
   const [done, setDone] = useState([]);
+  const [err, setErr] = useState("");
 
   useEffect(() => {
     if (!uid) return;
-    api.goals(uid).then((gs) => setDone((gs || []).filter((g) => g.status === "done"))).catch(() => {});
+    api.goals(uid).then((gs) => setDone((gs || []).filter((g) => g.status === "done"))).catch((e) => {
+      console.error("Failed to load completed goals:", e);
+      setErr(String(e.message || e));
+    });
   }, [uid]);
 
   const d = { done: dash?.done || 0, streak: dash?.streak || 0 };
@@ -37,6 +41,8 @@ export default function AchievementsPage() {
         title="成就墙"
         desc={`已点亮 ${earned}/${MILESTONES.length} 个里程碑 · 已完成 ${done.length} 个目标`}
       />
+
+      {err ? <div className="mb-4 rounded-md border border-danger/20 bg-dangersoft px-4 py-2.5 text-sm font-semibold text-danger">{err}</div> : null}
 
       {/* 行为里程碑(自动点亮) */}
       <Card tone="soft">
@@ -81,7 +87,7 @@ export default function AchievementsPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {done.map((g) => {
               let dp = null;
-              try { dp = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
+              try { dp = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) { console.warn("Failed to parse goal decomposition for", g.id, e); }
               return (
                 <Card key={g.id} tone="accent">
                   <Trophy size={22} className="mb-3 text-warn" />
