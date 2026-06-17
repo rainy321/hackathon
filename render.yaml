@@ -13,6 +13,10 @@ services:
     envVars:
       - key: GLM_API_KEY          # 部署时 Render 会单独让你填(不写进仓库)
         sync: false
+      - key: TOKEN_SECRET          # 用于签发登录令牌(部署时 Render 填写一个随机字符串)
+        sync: false
+      - key: CORS_ORIGINS          # 逗号分隔的前端域名(如 https://your-frontend.netlify.app)
+        sync: false
       - key: GLM_BASE_URL
         value: https://open.bigmodel.cn/api/paas/v4
       - key: GLM_MODEL
