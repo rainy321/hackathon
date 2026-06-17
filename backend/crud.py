@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """数据库操作。每个函数自带连接,返回 dict / list[dict]。"""
 import json
+import logging
 import re
 from datetime import date, datetime, timedelta
 from uuid import uuid4
 import auth
 from db import get_conn
+
+logger = logging.getLogger(__name__)
 
 
 def _rows(rows):
@@ -122,8 +125,11 @@ def create_goal(gid, user_id, title, category, time_horizon, status,
 
 
 def delete_goal(gid):
-    """删除目标及其所有任务和行为日志(从每日生成池子里移除)。"""
+    """删除目标及其所有任务和行为日志。Returns True if deleted, False if not found."""
     with get_conn() as c:
+        existing = c.execute("SELECT 1 FROM goal WHERE id=?", (gid,)).fetchone()
+        if not existing:
+            return False
         c.execute(
             "DELETE FROM behavior_log WHERE task_id IN "
             "(SELECT id FROM task WHERE goal_id=?)", (gid,))
@@ -166,7 +172,8 @@ def goal_days_left(row, today):
     try:
         start_d = datetime.strptime(start, "%Y-%m-%d").date()
         today_d = datetime.strptime(today, "%Y-%m-%d").date()
-    except Exception:
+    except (ValueError, TypeError) as e:
+        logger.warning("Invalid date in goal_days_left (start=%r, today=%r): %s", start, today, e)
         return None
     end_d = start_d + timedelta(days=horizon_to_days(row["time_horizon"]))
     return (end_d - today_d).days
@@ -286,12 +293,15 @@ def update_task(tid, content=None, difficulty=None, status=None):
 
 
 def delete_task(tid):
-    """删除任务及其行为日志。"""
+    """删除任务及其行为日志。Returns True if deleted, False if not found."""
     with get_conn() as c:
+        existing = c.execute("SELECT 1 FROM task WHERE id=?", (tid,)).fetchone()
+        if not existing:
+            return False
         c.execute("DELETE FROM behavior_log WHERE task_id=?", (tid,))
         c.execute("DELETE FROM task WHERE id=?", (tid,))
         c.commit()
-        return c.total_changes
+        return True
 
 
 # ---------- behavior_log ----------

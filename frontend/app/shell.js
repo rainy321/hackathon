@@ -360,7 +360,7 @@ function CelebrationModal({ goals, onClose }) {
 }
 
 export default function Shell({ children }) {
-  const { me, logout, simDate, dayN, tone, newlyCompleted, clearCelebration } = useGrowth();
+  const { me, logout, simDate, dayN, tone, newlyCompleted, clearCelebration, globalError } = useGrowth();
   const [profile, setProfile] = useState(false);
   const path = usePathname();
 
@@ -442,7 +442,10 @@ export default function Shell({ children }) {
       </header>
 
       <main className="flex-1 px-4 pb-28 pt-5 sm:px-6 lg:px-8 lg:py-8">
-        <div className="mx-auto max-w-7xl">{children}</div>
+        <div className="mx-auto max-w-7xl">
+          {globalError ? <div className="mb-4 rounded-md border border-danger/20 bg-dangersoft px-4 py-2.5 text-sm font-semibold text-danger">{globalError}</div> : null}
+          {children}
+        </div>
       </main>
 
       <Companion />

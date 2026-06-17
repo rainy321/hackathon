@@ -42,7 +42,7 @@ export default function Overview() {
   const [doneCount, setDoneCount] = useState(0);
   useEffect(() => {
     if (!uid) return;
-    api.goals(uid).then((gs) => setDoneCount((gs || []).filter((g) => g.status === "done").length)).catch(() => {});
+    api.goals(uid).then((gs) => setDoneCount((gs || []).filter((g) => g.status === "done").length)).catch((e) => console.error("Failed to load goals count:", e));
   }, [uid]);
   const todays = tasks.filter((t) => t.date === simDate);
   const doneToday = todays.filter((t) => t.status === "completed").length;

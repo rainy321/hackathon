@@ -3,6 +3,7 @@
 启动:  uvicorn main:app --app-dir backend --reload --port 8000
 文档:  http://localhost:8000/docs
 """
+import logging
 from contextlib import asynccontextmanager
 from datetime import date
 from uuid import uuid4
@@ -16,6 +17,8 @@ import ai_adapter
 import seed
 
 from fastapi.middleware.cors import CORSMiddleware
+
+logger = logging.getLogger(__name__)
 
 
 @asynccontextmanager
@@ -112,7 +115,8 @@ def api_goal(gid: str):
 @app.delete("/api/goals/{gid}")
 def api_delete_goal(gid: str):
     """删除目标(及其任务/日志),从每日生成池子移除。"""
-    crud.delete_goal(gid)
+    if not crud.delete_goal(gid):
+        raise HTTPException(404, "goal not found")
     return {"deleted": True}
 
 
@@ -128,7 +132,10 @@ def api_complete_goal(gid: str):
 @app.post("/api/goals/check-due")
 def api_check_due(p: dict = Body(...)):
     """检查并自动完成到期目标,返回本次刚完成的(前端用于弹窗提醒)。"""
-    newly = crud.complete_due_goals(p.get("user_id"),
+    uid = (p.get("user_id") or "").strip()
+    if not uid:
+        raise HTTPException(400, "user_id is required")
+    newly = crud.complete_due_goals(uid,
                                     p.get("date") or date.today().isoformat())
     return {"newly_completed": newly}
 
@@ -210,7 +217,9 @@ def api_update_task(tid: str, p: dict = Body(...)):
 
 @app.delete("/api/tasks/{tid}")
 def api_delete_task(tid: str):
-    return {"deleted": crud.delete_task(tid)}
+    if not crud.delete_task(tid):
+        raise HTTPException(404, "task not found")
+    return {"deleted": True}
 
 
 # ---------------- behavior logs ----------------
@@ -232,6 +241,8 @@ def api_memory(user_id: str | None = Query(None)):
 @app.get("/api/analysis")
 def api_analysis(user_id: str = Query(...)):
     """近 7 天行为 → Behavior Analyst → 规律/障碍/洞察。"""
+    if not crud.get_user(user_id):
+        raise HTTPException(404, "user not found")
     logs, rate = crud.recent_logs(user_id)
     if not logs:
         return {"completion_rate_7d": 0, "logs_count": 0, "insights": []}
@@ -243,6 +254,8 @@ def api_analysis(user_id: str = Query(...)):
 @app.post("/api/adjust")
 def api_adjust(user_id: str = Query(...), p: dict = Body(default={})):
     """完成率 + 洞察 + 当前任务 → System Adjuster → 动态调整建议。"""
+    if not crud.get_user(user_id):
+        raise HTTPException(404, "user not found")
     logs, rate = crud.recent_logs(user_id)
     insights = p.get("insights")
     if insights is None:
@@ -257,6 +270,8 @@ def api_adjust(user_id: str = Query(...), p: dict = Body(default={})):
 @app.post("/api/analysis/save")
 def api_save_analysis(user_id: str = Query(...), p: dict = Body(...)):
     """把分析洞察写入 memory(复利沉淀)。"""
+    if not crud.get_user(user_id):
+        raise HTTPException(404, "user not found")
     insights = p.get("insights", [])
     for ins in insights:
         crud.add_memory(user_id, ins.get("insight_type", "洞察"),

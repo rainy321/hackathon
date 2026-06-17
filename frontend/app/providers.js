@@ -18,12 +18,13 @@ export function GrowthProvider({ children }) {
   const [compOpen, setCompOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [newlyCompleted, setNewlyCompleted] = useState([]);
+  const [globalError, setGlobalError] = useState("");
 
   const uid = me?.id || "";
   const tone = me?.tone || "温暖朋友";
   const dayN = dayDiff(isoToday(), simDate) + 1;
 
-  // 挂载后读登录态(SSR 安全)
+  // 挂载后读登录态（SSR 安全）
   useEffect(() => {
     const timer = window.setTimeout(() => {
       try {
@@ -31,7 +32,11 @@ export function GrowthProvider({ children }) {
         if (s) setMe(JSON.parse(s));
         const sd = localStorage.getItem("gos_sim");
         if (sd) setSimDate(sd);
-      } catch (e) {}
+      } catch (e) {
+        console.error("Failed to restore session from localStorage:", e);
+        localStorage.removeItem("gos_me");
+        localStorage.removeItem("gos_sim");
+      }
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
@@ -39,16 +44,19 @@ export function GrowthProvider({ children }) {
   const loadAll = useCallback((id) => {
     if (!id) return;
     return Promise.all([api.dashboard(id), api.memory(id), api.tasks(id)])
-      .then(([d, m, t]) => { setDash(d); setMem(m); setTasks(t); })
-      .catch(() => {});
+      .then(([d, m, t]) => { setDash(d); setMem(m); setTasks(t); setGlobalError(""); })
+      .catch((e) => {
+        console.error("Failed to load dashboard data:", e);
+        setGlobalError("数据加载失败,请检查后端是否启动");
+      });
   }, []);
 
-  // 进入或快进到新一天 → 检查到期目标自动完成(刚完成的用于弹窗)+ 刷新数据
+  // 进入或快进到新一天 → 检查到期目标自动完成（刚完成的用于弹窗）+ 刷新数据
   useEffect(() => {
     if (!uid) return;
     api.checkDue(uid, simDate)
       .then((r) => { if (r && r.newly_completed && r.newly_completed.length) setNewlyCompleted(r.newly_completed); })
-      .catch(() => {});
+      .catch((e) => console.error("Failed to check due goals:", e));
     loadAll(uid);
   }, [uid, simDate, loadAll]);
 
@@ -56,7 +64,7 @@ export function GrowthProvider({ children }) {
 
   useEffect(() => { if (uid) loadAll(uid); }, [uid, loadAll]);
 
-  const refreshDash = useCallback(() => uid ? api.dashboard(uid).then(setDash).catch(() => {}) : null, [uid]);
+  const refreshDash = useCallback(() => uid ? api.dashboard(uid).then(setDash).catch((e) => console.error("Failed to refresh dashboard:", e)) : null, [uid]);
 
   function login(u) { localStorage.setItem("gos_me", JSON.stringify(u)); setMe(u); }
   function logout() { localStorage.removeItem("gos_me"); setMe(null); setCompOpen(false); setMessages([]); }
@@ -95,6 +103,7 @@ export function GrowthProvider({ children }) {
     login, logout, updateMe, fastForward,
     compOpen, messages, toggleCompanion, sendCompanion,
     newlyCompleted, clearCelebration,
+    globalError, setGlobalError,
   };
 
   return <GrowthCtx.Provider value={value}>{children}</GrowthCtx.Provider>;
