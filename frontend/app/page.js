@@ -25,8 +25,7 @@ import {
 import { useGrowth } from "./providers";
 import { api } from "@/lib/api";
 import { Bar, BotanicalAccent, Card, EmptyState, PageHeader, SectionTitle, Stat, Tag } from "./ui";
-
-const pct = (n) => Math.round((n || 0) * 100);
+import { pct } from "./shared";
 const TIMELINE = [
   ["设定", "目标与基础状态"],
   ["拆解", "阶段与能力"],

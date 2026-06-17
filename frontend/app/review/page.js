@@ -14,9 +14,8 @@ import {
 } from "lucide-react";
 import { useGrowth } from "../providers";
 import { api } from "@/lib/api";
-import { Bar, BotanicalAccent, Btn, Card, EmptyState, PageHeader, SectionTitle, Tag } from "../ui";
-
-const pct = (n) => Math.round((n || 0) * 100);
+import { Bar, BotanicalAccent, Btn, Card, EmptyState, ErrorBanner, PageHeader, SectionTitle, Tag } from "../ui";
+import { pct } from "../shared";
 
 export default function ReviewPage() {
   const { uid, simDate, tone, loadAll } = useGrowth();
@@ -88,7 +87,7 @@ export default function ReviewPage() {
         desc={`当前日期 ${simDate} · 语气 ${tone}。这里读取近 7 天行为,把真实阻碍转成新的计划策略。`}
       />
 
-      {err ? <div className="mb-4 rounded-md border border-danger/20 bg-dangersoft px-4 py-2.5 text-sm font-semibold text-danger">{err}</div> : null}
+      <ErrorBanner message={err} />
 
       <Card tone="info" className="relative mb-5 overflow-hidden">
         <BotanicalAccent className="absolute -bottom-14 -right-12 h-44 w-52 rotate-[-16deg] opacity-25" />

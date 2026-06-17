@@ -62,6 +62,11 @@ export function goalDaysLeft(g, today) {
   return Math.round((end - now) / 86400000);
 }
 export function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+export const pct = (n) => Math.round((n || 0) * 100);
+export function parseDecomposition(raw) {
+  if (!raw) return null;
+  try { return typeof raw === "string" ? JSON.parse(raw) : raw; } catch (_) { return null; }
+}
 
 // —— 陪伴小人对话 ——
 export function companionGreeting(tone, name, dayN) {

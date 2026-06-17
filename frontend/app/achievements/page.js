@@ -5,6 +5,7 @@ import { Trophy, Flame, Star, CheckCircle2, Sprout, CalendarDays, Sparkles } fro
 import { useGrowth } from "../providers";
 import { api } from "@/lib/api";
 import { Bar, Card, PageHeader, EmptyState, Tag } from "../ui";
+import { parseDecomposition } from "../shared";
 
 // 行为里程碑:自动从打卡数据点亮(不用手动)
 const MILESTONES = [
@@ -80,8 +81,7 @@ export default function AchievementsPage() {
         {done.length ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {done.map((g) => {
-              let dp = null;
-              try { dp = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
+              const dp = parseDecomposition(g.decomposition);
               return (
                 <Card key={g.id} tone="accent">
                   <Trophy size={22} className="mb-3 text-warn" />

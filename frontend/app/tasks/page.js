@@ -19,8 +19,8 @@ import {
 } from "lucide-react";
 import { useGrowth } from "../providers";
 import { api } from "@/lib/api";
-import { Bar, BotanicalAccent, Btn, Card, EmptyState, PageHeader, SectionTitle, Tag } from "../ui";
-import { FEEDBACK, PRESETS, addDay, goalDaysLeft, pick } from "../shared";
+import { Bar, BotanicalAccent, Btn, Card, EmptyState, ErrorBanner, PageHeader, SectionTitle, Tag, ToastBanner } from "../ui";
+import { FEEDBACK, PRESETS, addDay, goalDaysLeft, parseDecomposition, pick } from "../shared";
 
 const diffTone = { 高: "danger", 中: "warn", 低: "accent" };
 
@@ -125,8 +125,9 @@ export default function TasksPage() {
     }
   }
 
-  async function onRegenerate() {
+  async function generateTasks() {
     setPlanning(true);
+    setErr("");
     try {
       const gs = (await api.goals(uid)).filter((g) => g.status !== "done");
       for (const g of gs) await api.planToday(g.id, simDate);
@@ -175,19 +176,7 @@ export default function TasksPage() {
     }
   }
 
-  async function onPlan() {
-    setPlanning(true);
-    setErr("");
-    try {
-      // 只给进行中的目标生成(已完成的目标不再生成)
-      const gs = (await api.goals(uid)).filter((g) => g.status !== "done");
-      for (const g of gs) await api.planToday(g.id, simDate);
-      await loadAll(uid);
-    } catch (e) {
-      setErr(String(e.message || e));
-    }
-    setPlanning(false);
-  }
+
 
   return (
     <>
@@ -203,8 +192,8 @@ export default function TasksPage() {
         }
       />
 
-      {toast ? <div className="mb-4 rounded-md border border-accent/20 bg-accentsoft px-4 py-2.5 text-sm font-semibold text-ink">{toast}</div> : null}
-      {err ? <div className="mb-4 rounded-md border border-danger/20 bg-dangersoft px-4 py-2.5 text-sm font-semibold text-danger">{err}</div> : null}
+      <ToastBanner message={toast} />
+      <ErrorBanner message={err} />
 
       <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1.25fr_0.85fr]">
         <div className="space-y-5">
@@ -215,7 +204,7 @@ export default function TasksPage() {
               title="今日执行栈"
               desc="每条任务都可以一键记录状态,系统会把完成质量和原因带入复盘。"
               right={createdGoalId ? (
-                <Btn variant="ghost" size="sm" onClick={onRegenerate} disabled={planning}>
+                <Btn variant="ghost" size="sm" onClick={generateTasks} disabled={planning}>
                   <RefreshCw size={14} />
                   换一批
                 </Btn>
@@ -366,7 +355,7 @@ export default function TasksPage() {
                 <Sparkles size={15} />
                 {busy ? "拆解中..." : "创建并拆解"}
               </Btn>
-              <Btn variant="outline" onClick={onPlan} disabled={planning || !createdGoalId}>
+              <Btn variant="outline" onClick={generateTasks} disabled={planning || !createdGoalId}>
                 <ArrowRight size={15} />
                 {planning ? "生成中..." : "生成今日任务"}
               </Btn>
@@ -420,8 +409,7 @@ export default function TasksPage() {
             <SectionTitle icon={Target} title="我的目标" desc="每日任务从这里生成;完成了点✓移入成就,不需要的点删除。" />
             <ul className="grid gap-2 sm:grid-cols-2">
               {active.map((g) => {
-                let d = null;
-                try { d = typeof g.decomposition === "string" ? JSON.parse(g.decomposition) : g.decomposition; } catch (e) {}
+                const d = parseDecomposition(g.decomposition);
                 const left = goalDaysLeft(g, simDate);
                 return (
                   <li key={g.id} className="rounded-md border border-line bg-paper px-3 py-2.5">
