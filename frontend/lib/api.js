@@ -4,12 +4,26 @@
 // - 本地开发在 frontend/.env.local 里设 NEXT_PUBLIC_API_BASE=http://localhost:8000
 const BASE = process.env.NEXT_PUBLIC_API_BASE ?? "";
 
-async function request(path, { method = "GET", body } = {}) {
+function getToken() {
+  if (typeof window === "undefined") return null;
+  try {
+    const me = JSON.parse(localStorage.getItem("gos_me") || "null");
+    return me?.token || null;
+  } catch { return null; }
+}
+
+async function request(path, { method = "GET", body, skipAuth = false } = {}) {
+  const headers = {};
+  if (body !== undefined) headers["Content-Type"] = "application/json";
+  if (!skipAuth) {
+    const token = getToken();
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+  }
   let r;
   try {
     r = await fetch(BASE + path, {
       method,
-      headers: body !== undefined ? { "Content-Type": "application/json" } : undefined,
+      headers: Object.keys(headers).length ? headers : undefined,
       body: body !== undefined ? JSON.stringify(body) : undefined,
     });
   } catch (e) {
@@ -48,6 +62,6 @@ export const api = {
   adjust: (uid, insights) => request("/api/adjust?user_id=" + uid, { method: "POST", body: { insights } }),
   saveInsights: (uid, insights) =>
     request("/api/analysis/save?user_id=" + uid, { method: "POST", body: { insights } }),
-  register: (body) => request("/api/auth/register", { method: "POST", body }),
-  login: (body) => request("/api/auth/login", { method: "POST", body }),
+  register: (body) => request("/api/auth/register", { method: "POST", body, skipAuth: true }),
+  login: (body) => request("/api/auth/login", { method: "POST", body, skipAuth: true }),
 };

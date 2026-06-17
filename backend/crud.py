@@ -64,10 +64,15 @@ def login_user(name, password):
 
 
 def ensure_demo_passwords(default="123456"):
-    """给没有密码的旧用户(如种子数据)设默认密码,方便演示登录。"""
+    """给没有密码的旧用户(如种子数据)设默认密码,方便演示登录。
+    WARNING: 仅用于开发/演示;生产环境应要求用户自行设置密码。"""
+    import sys
     with get_conn() as c:
         row = c.execute("SELECT COUNT(*) FROM user WHERE password IS NULL").fetchone()
         if row and row[0] > 0:
+            print("[SECURITY WARNING] Setting default demo password for "
+                  f"{row[0]} user(s). Do NOT use in production.",
+                  file=sys.stderr)
             c.execute("UPDATE user SET password=? WHERE password IS NULL",
                       (auth.hash_pw(default),))
             c.commit()
