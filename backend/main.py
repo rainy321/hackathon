@@ -18,6 +18,14 @@ import seed
 from fastapi.middleware.cors import CORSMiddleware
 
 
+def _get_or_404(getter, pk, label):
+    """Call getter(pk); raise 404 if None."""
+    obj = getter(pk)
+    if not obj:
+        raise HTTPException(404, f"{label} not found")
+    return obj
+
+
 @asynccontextmanager
 async def lifespan(app):
     # 建表 IF NOT EXISTS + 迁移补列;幂等,每次启动都安全执行
@@ -81,18 +89,14 @@ def api_create_user(body: schemas.UserCreate):
 @app.put("/api/users/{uid}")
 def api_update_user(uid: str, p: dict = Body(...)):
     """更新用户资料:baseline / tone / name。"""
-    u = crud.update_user(uid, p.get("name"), p.get("baseline"), p.get("tone"))
-    if not u:
-        raise HTTPException(404, "user not found")
-    return u
+    return _get_or_404(
+        lambda pk: crud.update_user(pk, p.get("name"), p.get("baseline"), p.get("tone")),
+        uid, "user")
 
 
 @app.get("/api/users/{uid}")
 def api_user(uid: str):
-    u = crud.get_user(uid)
-    if not u:
-        raise HTTPException(404, "user not found")
-    return u
+    return _get_or_404(crud.get_user, uid, "user")
 
 
 # ---------------- goals ----------------
@@ -103,10 +107,7 @@ def api_goals(user_id: str | None = Query(None)):
 
 @app.get("/api/goals/{gid}")
 def api_goal(gid: str):
-    g = crud.get_goal(gid)
-    if not g:
-        raise HTTPException(404, "goal not found")
-    return g
+    return _get_or_404(crud.get_goal, gid, "goal")
 
 
 @app.delete("/api/goals/{gid}")
@@ -119,10 +120,7 @@ def api_delete_goal(gid: str):
 @app.post("/api/goals/{gid}/complete")
 def api_complete_goal(gid: str):
     """标记目标完成(移入成就池,不再每天生成)。"""
-    g = crud.complete_goal(gid)
-    if not g:
-        raise HTTPException(404, "goal not found")
-    return g
+    return _get_or_404(crud.complete_goal, gid, "goal")
 
 
 @app.post("/api/goals/check-due")
@@ -176,10 +174,7 @@ def api_tasks(
 
 @app.get("/api/tasks/{tid}")
 def api_task(tid: str):
-    t = crud.get_task(tid)
-    if not t:
-        raise HTTPException(404, "task not found")
-    return t
+    return _get_or_404(crud.get_task, tid, "task")
 
 
 @app.post("/api/tasks/{tid}/checkin")
@@ -202,10 +197,9 @@ def api_create_task(p: dict = Body(...)):
 
 @app.put("/api/tasks/{tid}")
 def api_update_task(tid: str, p: dict = Body(...)):
-    t = crud.update_task(tid, p.get("content"), p.get("difficulty"), p.get("status"))
-    if not t:
-        raise HTTPException(404, "task not found")
-    return t
+    return _get_or_404(
+        lambda pk: crud.update_task(pk, p.get("content"), p.get("difficulty"), p.get("status")),
+        tid, "task")
 
 
 @app.delete("/api/tasks/{tid}")

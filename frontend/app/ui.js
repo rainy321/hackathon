@@ -125,3 +125,13 @@ export function EmptyState({ icon: Icon, title, desc, action }) {
 export function BotanicalAccent({ className = "" }) {
   return <Image src="/botanical-sprig.svg" alt="" width={220} height={180} aria-hidden="true" className={`pointer-events-none select-none ${className}`} />;
 }
+
+export function ErrorBanner({ message }) {
+  if (!message) return null;
+  return <div className="mb-4 rounded-md border border-danger/20 bg-dangersoft px-4 py-2.5 text-sm font-semibold text-danger">{message}</div>;
+}
+
+export function ToastBanner({ message }) {
+  if (!message) return null;
+  return <div className="mb-4 rounded-md border border-accent/20 bg-accentsoft px-4 py-2.5 text-sm font-semibold text-ink">{message}</div>;
+}

@@ -19,6 +19,36 @@ def _safe(user_row):
     return u
 
 
+def _get_one(table, pk, pk_col="id", transform=dict):
+    """按主键查单行,返回 transform(row) 或 None。"""
+    with get_conn() as c:
+        r = c.execute(f"SELECT * FROM {table} WHERE {pk_col}=?", (pk,)).fetchone()
+        return transform(r) if r else None
+
+
+def _update_fields(table, pk, fields, pk_col="id", transform=dict):
+    """逐字段 UPDATE(跳过 None),提交后返回更新行。"""
+    with get_conn() as c:
+        for col, val in fields.items():
+            if val is not None:
+                c.execute(f"UPDATE {table} SET {col}=? WHERE {pk_col}=?", (val, pk))
+        c.commit()
+        r = c.execute(f"SELECT * FROM {table} WHERE {pk_col}=?", (pk,)).fetchone()
+        return transform(r) if r else None
+
+
+def _build_query(base_sql, joins=None, conditions=None, params=None, order_by=None):
+    """组装 SQL:拼 JOIN / WHERE / ORDER BY,返回 (sql, params)。"""
+    sql = base_sql
+    if joins:
+        sql += " " + " ".join(joins)
+    if conditions:
+        sql += " WHERE " + " AND ".join(conditions)
+    if order_by:
+        sql += " ORDER BY " + order_by
+    return sql, params or []
+
+
 # ---------- user ----------
 def list_users():
     with get_conn() as c:
@@ -26,9 +56,7 @@ def list_users():
 
 
 def get_user(uid):
-    with get_conn() as c:
-        r = c.execute("SELECT * FROM user WHERE id=?", (uid,)).fetchone()
-        return _safe(r) if r else None
+    return _get_one("user", uid, transform=_safe)
 
 
 def create_user(uid, name, baseline):
@@ -74,16 +102,9 @@ def ensure_demo_passwords(default="123456"):
 
 
 def update_user(uid, name=None, baseline=None, tone=None):
-    with get_conn() as c:
-        if name is not None:
-            c.execute("UPDATE user SET name=? WHERE id=?", (name, uid))
-        if baseline is not None:
-            c.execute("UPDATE user SET baseline=? WHERE id=?", (baseline, uid))
-        if tone is not None:
-            c.execute("UPDATE user SET tone=? WHERE id=?", (tone, uid))
-        c.commit()
-        r = c.execute("SELECT * FROM user WHERE id=?", (uid,)).fetchone()
-        return _safe(r) if r else None
+    return _update_fields("user", uid,
+                          {"name": name, "baseline": baseline, "tone": tone},
+                          transform=_safe)
 
 
 # ---------- goal ----------
@@ -99,9 +120,7 @@ def list_goals(user_id=None):
 
 
 def get_goal(gid):
-    with get_conn() as c:
-        r = c.execute("SELECT * FROM goal WHERE id=?", (gid,)).fetchone()
-        return dict(r) if r else None
+    return _get_one("goal", gid)
 
 
 def create_goal(gid, user_id, title, category, time_horizon, status,
@@ -135,11 +154,7 @@ def delete_goal(gid):
 
 def complete_goal(gid):
     """标记目标完成(移入成就池,不再每天生成)。"""
-    with get_conn() as c:
-        c.execute("UPDATE goal SET status=? WHERE id=?", ("done", gid))
-        c.commit()
-        r = c.execute("SELECT * FROM goal WHERE id=?", (gid,)).fetchone()
-        return dict(r) if r else None
+    return _update_fields("goal", gid, {"status": "done"})
 
 
 def horizon_to_days(h):
@@ -234,29 +249,24 @@ def insert_tasks(gid, tasks, date_str):
 
 # ---------- task ----------
 def list_tasks(goal_id=None, date=None, user_id=None):
-    sql = "SELECT t.* FROM task t"
-    joins, where, p = "", [], []
+    joins, conds, p = [], [], []
     if user_id:
-        joins += " JOIN goal g ON t.goal_id=g.id"
-        where.append("g.user_id=?")
+        joins.append("JOIN goal g ON t.goal_id=g.id")
+        conds.append("g.user_id=?")
         p.append(user_id)
     if goal_id:
-        where.append("t.goal_id=?")
+        conds.append("t.goal_id=?")
         p.append(goal_id)
     if date:
-        where.append("t.date=?")
+        conds.append("t.date=?")
         p.append(date)
-    if where:
-        sql += joins + " WHERE " + " AND ".join(where)
-    sql += " ORDER BY t.date, t.id"
+    sql, p = _build_query("SELECT t.* FROM task t", joins, conds, p, "t.date, t.id")
     with get_conn() as c:
         return _rows(c.execute(sql, p).fetchall())
 
 
 def get_task(tid):
-    with get_conn() as c:
-        r = c.execute("SELECT * FROM task WHERE id=?", (tid,)).fetchone()
-        return dict(r) if r else None
+    return _get_one("task", tid)
 
 
 def create_task(gid, date_str, content, difficulty="中"):
@@ -273,16 +283,8 @@ def create_task(gid, date_str, content, difficulty="中"):
 
 
 def update_task(tid, content=None, difficulty=None, status=None):
-    with get_conn() as c:
-        if content is not None:
-            c.execute("UPDATE task SET content=? WHERE id=?", (content, tid))
-        if difficulty is not None:
-            c.execute("UPDATE task SET difficulty=? WHERE id=?", (difficulty, tid))
-        if status is not None:
-            c.execute("UPDATE task SET status=? WHERE id=?", (status, tid))
-        c.commit()
-        r = c.execute("SELECT * FROM task WHERE id=?", (tid,)).fetchone()
-        return dict(r) if r else None
+    return _update_fields("task", tid,
+                          {"content": content, "difficulty": difficulty, "status": status})
 
 
 def delete_task(tid):
@@ -296,18 +298,16 @@ def delete_task(tid):
 
 # ---------- behavior_log ----------
 def list_logs(task_id=None, user_id=None):
-    sql = "SELECT l.* FROM behavior_log l"
-    joins, where, p = "", [], []
+    joins, conds, p = [], [], []
     if user_id:
-        joins += " JOIN task t ON l.task_id=t.id JOIN goal g ON t.goal_id=g.id"
-        where.append("g.user_id=?")
+        joins.append("JOIN task t ON l.task_id=t.id")
+        joins.append("JOIN goal g ON t.goal_id=g.id")
+        conds.append("g.user_id=?")
         p.append(user_id)
     if task_id:
-        where.append("l.task_id=?")
+        conds.append("l.task_id=?")
         p.append(task_id)
-    if where:
-        sql += joins + " WHERE " + " AND ".join(where)
-    sql += " ORDER BY l.date, l.id"
+    sql, p = _build_query("SELECT l.* FROM behavior_log l", joins, conds, p, "l.date, l.id")
     with get_conn() as c:
         return _rows(c.execute(sql, p).fetchall())
 
